@@ -1,0 +1,12 @@
+/*
+Este é o arquivo de configuração do sequelize.
+Ele mostra onde o ORM deve procurar o arquivo de configuração do banco de dados.
+Aqui não se usa o ES6 porque o sequelize só entende CommonJS por padrão
+*/
+
+const path = require('path');
+
+module.exports = {
+  config: path.resolve(__dirname, 'src', 'config', 'dbConfig.js'), //aqui vai o caminho do arquivo de configuração
+  'migrations-path': path.resolve(__dirname, 'src', 'database', 'migrations') // aqui vai o caminho para a pasta de migrations
+}
