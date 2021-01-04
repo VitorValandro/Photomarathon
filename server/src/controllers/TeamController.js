@@ -1,4 +1,4 @@
-const Team = require('../models/Team')
+const Team = require('../models/Team');
 
 module.exports = {
   async index(req, res){
@@ -17,5 +17,21 @@ module.exports = {
     });
 
     return res.json(team);
+  },
+
+  async remove(req, res){
+    const { teamId } = req.params;
+
+    await Team.destroy({
+      where: {
+        id: teamId
+      }
+    }).then(function (rowDeleted) { 
+      if (rowDeleted === 1) {
+        return res.json({ message: `O Time ${teamId} foi deletado com sucesso` })
+      }
+    }, function (err) {
+        return res.status(400).json({ error: err })
+    });
   }
 }

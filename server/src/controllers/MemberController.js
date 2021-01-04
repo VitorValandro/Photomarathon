@@ -33,5 +33,21 @@ module.exports = {
     });
 
     return res.json(member);
+  },
+
+  async remove(req, res) {
+    const { memberId } = req.params;
+
+    await Member.destroy({
+      where: {
+        id: memberId
+      }
+    }).then(function (rowDeleted) {
+      if (rowDeleted === 1) {
+        return res.json({ message: `O membro ${memberId} foi deletado com sucesso` })
+      }
+    }, function (err) {
+      return res.status(400).json({ error: err })
+    });
   }
 }
