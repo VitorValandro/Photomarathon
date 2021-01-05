@@ -22,6 +22,11 @@ module.exports = {
   async remove(req, res){
     const { teamId } = req.params;
 
+    const team = await Team.findByPk(teamId);
+    if (!team) {
+      return res.status(400).json({ error: `O Tema ${teamId} não existe` })
+    }
+
     await Team.destroy({
       where: {
         id: teamId

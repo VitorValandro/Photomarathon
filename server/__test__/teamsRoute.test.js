@@ -37,6 +37,25 @@ describe("Testando a rota de Times", () => {
     memberId = response.body.id;
   });
 
+  test("CREATE Photo - Deve responder com as propriedades do membro cadastrado", async () => {
+    const response = await request(app)
+      .post(`/teams/${teamId}/photos`)
+      .send({
+        "name": "Photo (teste automatizado)",
+        "registration": "40028922",
+      });
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('id');
+    photoId = response.body.id;
+  });
+
+  test("DELETE Photo - Deve responder com uma mensagem de sucesso", async () => {
+    const response = await request(app)
+      .delete(`/teams/${teamId}/photos/${photoId}`);
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('message');
+  })
+
   test("DELETE Member - Deve responder com uma mensagem de sucesso", async () => {
     const response = await request(app)
       .delete(`/teams/${teamId}/members/${memberId}`);
