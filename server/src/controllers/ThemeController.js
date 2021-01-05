@@ -1,18 +1,21 @@
+const Subtheme = require('../models/Subtheme');
 const Theme = require('../models/Theme');
 
 module.exports = {
   async index(req, res) {
-    const themes = await Theme.findAll();
+    const themes = await Theme.findAll({
+      include: { association: 'subthemes' }
+    });
 
     return res.json(themes);
   },
 
   async store(req, res) {
-    const { title, number } = req.body;
+    const { title, year } = req.body;
 
     const theme = await Theme.create({
       title,
-      number
+      year
     })
 
     return res.json(theme);

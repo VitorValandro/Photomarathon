@@ -1,18 +1,18 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Theme extends Model {
+class Subtheme extends Model {
   static init(sequelize) {
     super.init({
       title: DataTypes.STRING,
-      year: DataTypes.INTEGER
+      number: DataTypes.INTEGER,
     }, {
       sequelize
     })
   }
 
   static associate(models) {
-    this.hasMany(models.Subtheme, { foreignKey: 'themeId', as: 'subthemes' });
+    this.belongsTo(models.Theme, { foreignKey: 'themeId', as: 'theme' });
   }
 }
 
-module.exports = Theme;
+module.exports = Subtheme;

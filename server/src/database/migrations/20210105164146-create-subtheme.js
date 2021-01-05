@@ -2,21 +2,28 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('themes', {
+    await queryInterface.createTable('subthemes', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
+      themeId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'themes', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       title: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      year: {
-        type: Sequelize.INTEGER,
+      number: {
+        type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: true
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -31,6 +38,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('themes');
+    await queryInterface.dropTable('subthemes');
   }
 };

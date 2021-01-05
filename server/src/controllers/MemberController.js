@@ -40,7 +40,7 @@ module.exports = {
 
     const member = await Team.findByPk(memberId);
     if (!member) {
-      return res.status(400).json({ error: `O Tema ${memberId} não existe` })
+      return res.status(400).json({ error: `O membro ${memberId} não existe` })
     }
 
     await Member.destroy({
