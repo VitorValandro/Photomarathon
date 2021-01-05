@@ -13,6 +13,7 @@ class Team extends Model{
 
   static associate(models){
     this.hasMany(models.Member, { foreignKey:'teamId', as: 'members' });
+    this.hasMany(models.Photo, { foreignKey: 'teamId', as: 'photos' });
   }
 }
 

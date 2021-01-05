@@ -1,4 +1,3 @@
-const Subtheme = require('../models/Subtheme');
 const Theme = require('../models/Theme');
 
 module.exports = {
