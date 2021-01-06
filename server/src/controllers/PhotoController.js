@@ -1,3 +1,5 @@
+const uploadPhotoMiddleware = require('../config/uploadConfig');
+
 const Photo = require('../models/Photo');
 const Team = require('../models/Team');
 const Theme = require('../models/Theme');
@@ -39,23 +41,13 @@ module.exports = {
 
   async store(req, res) {
     const { teamId } = req.params;
-    const { name, themeId } = req.body;
-
-    const theme = await Theme.findByPk(themeId);
-    const team = await Team.findByPk(teamId);
-
-    if (!theme) {
-      return res.status(400).json({ error: `O tema de id ${themeId} não foi encontrado` })
-    }
-
-    if (!team) {
-      return res.status(400).json({ error: `O time de id ${teamId} não foi encontrado` })
-    }
+    const { themeId } = req.body;
+    const { filename } = req.file;
 
     const photo = await Photo.create({
-      name,
       teamId,
-      themeId
+      themeId,
+      filename,
     });
 
     return res.json(photo);

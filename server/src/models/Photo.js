@@ -3,8 +3,8 @@ const { Model, DataTypes } = require('sequelize');
 class Photo extends Model {
   static init(sequelize) {
     super.init({
-      name: DataTypes.STRING,
       themeId: DataTypes.INTEGER,
+      filename: DataTypes.STRING
     }, {
       sequelize
     })

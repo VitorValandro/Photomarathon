@@ -1,12 +1,16 @@
 const express = require('express');
+const multer = require('multer');
+
 const TeamController = require('./controllers/TeamController');
 const MemberController = require('./controllers/MemberController');
 const ThemeController = require('./controllers/ThemeController');
 const SubthemeController = require('./controllers/SubthemeController');
 const PhotoController = require('./controllers/PhotoController');
-const Photo = require('./models/Photo');
+
+const uploadConfig = require('./config/uploadConfig');
 
 const routes = express.Router();
+const upload = multer(uploadConfig);
 
 routes.get('/teams', TeamController.index);
 routes.post('/teams', TeamController.store);
@@ -16,7 +20,7 @@ routes.get('/teams/:teamId/members', MemberController.index);
 routes.post('/teams/:teamId/members', MemberController.store);
 routes.delete('/teams/:teamId/members/:memberId', MemberController.remove);
 
-routes.post('/teams/:teamId/photos', PhotoController.store);
+routes.post('/teams/:teamId/photos', upload.single('file'), PhotoController.store);
 routes.delete('/teams/:teamId/photos/:photoId', PhotoController.remove);
 
 routes.get('/themes', ThemeController.index);
