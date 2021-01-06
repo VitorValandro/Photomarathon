@@ -8,34 +8,39 @@ const SubthemeController = require('./controllers/SubthemeController');
 const PhotoController = require('./controllers/PhotoController');
 
 const uploadConfig = require('./config/uploadConfig');
+const AuthController = require('./controllers/AuthController');
+const authMiddleware = require('./middlewares/auth');
 
 const routes = express.Router();
 const upload = multer(uploadConfig);
 
-routes.get('/teams', TeamController.index);
-routes.post('/teams', TeamController.store);
-routes.delete('/teams/:teamId', TeamController.remove);
+routes.get('/teams', authMiddleware, TeamController.index); // apenas time logado
+routes.post('/teams', TeamController.store); // liberado
+routes.delete('/teams/:teamId', authMiddleware, TeamController.remove); // apenas admin
 
-routes.get('/teams/:teamId/members', MemberController.index);
-routes.post('/teams/:teamId/members', MemberController.store);
-routes.delete('/teams/:teamId/members/:memberId', MemberController.remove);
+routes.post('/teams/login', AuthController.login); // liberado
 
-routes.post('/teams/:teamId/photos', upload.single('file'), PhotoController.store);
-routes.delete('/teams/:teamId/photos/:photoId', PhotoController.remove);
+routes.get('/teams/:teamId/members', authMiddleware, MemberController.index); // apenas time logado
+routes.post('/teams/:teamId/members', authMiddleware, MemberController.store); // apenas time logado
+routes.delete('/teams/:teamId/members/:memberId', authMiddleware, MemberController.remove); // apenas time logado
 
-routes.get('/themes', ThemeController.index);
-routes.post('/themes', ThemeController.store);
-routes.delete('/themes/:themeId', ThemeController.remove);
+routes.post('/teams/:teamId/photos', upload.single('file'), authMiddleware, PhotoController.store); // apenas time logado
+routes.delete('/teams/:teamId/photos/:photoId', PhotoController.remove); // apenas admin
 
-routes.get('/themes/:themeId/subthemes', SubthemeController.index);
-routes.post('/themes/:themeId/subthemes', SubthemeController.store);
-routes.delete('/themes/:themeId/subthemes/:subthemeId', SubthemeController.remove);
+routes.get('/themes', ThemeController.index); // liberado
+routes.post('/themes', ThemeController.store); // apenas admin
+routes.delete('/themes/:themeId', ThemeController.remove); // apenas admin
 
-routes.get('/photos', PhotoController.indexAll);
-routes.get('/photos/:teamId', PhotoController.indexByTeam);
-routes.get('/photos/:subthemeId', PhotoController.indexBySubtheme);
+routes.get('/themes/:themeId/subthemes', SubthemeController.index); // liberado
+routes.post('/themes/:themeId/subthemes', SubthemeController.store); // apenas admin
+routes.delete('/themes/:themeId/subthemes/:subthemeId', SubthemeController.remove); // apenas admin
 
-routes.get('/', (req, res) => {
+routes.get('/photos', PhotoController.indexAll); // liberado
+routes.get('/photos/teams/:teamId', PhotoController.indexByTeam); // liberado
+routes.get('/photos/subthemes/:subthemeId', PhotoController.indexBySubtheme); // liberado
+
+routes.get('/', authMiddleware, (req, res) => {
+  console.log(req.teamId);
   return res.json({hello:'world'});
 })
 

@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 class Team extends Model{
   static init(sequelize){
@@ -7,7 +8,13 @@ class Team extends Model{
       email: DataTypes.STRING,
       password: DataTypes.STRING
     },{
-      sequelize
+      sequelize,
+      hooks:{
+        beforeCreate: (async (team, options) => {
+          const hash = await bcrypt.hash(team.password, 10);
+          team.password = hash;
+        })
+      }
     })
   }
 

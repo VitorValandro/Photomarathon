@@ -1,8 +1,13 @@
+const jwt = require('jsonwebtoken');
+
 const Team = require('../models/Team');
+const authConfig = require('../config/authConfig.json');
 
 module.exports = {
   async index(req, res){
-    const teams = await Team.findAll();
+    const teams = await Team.findAll({
+      attributes: { exclude: ['password'] }
+    });
 
     return res.json(teams);
   },
@@ -16,15 +21,21 @@ module.exports = {
       password
     });
 
-    return res.json(team);
+    team.password = undefined; // não retorna a senha ao cliente
+
+    const token = jwt.sign({id: team.id}, authConfig.secret, {
+        expiresIn: 86400 // define o tempo para o token expirar de 1 dia
+      });
+
+    return res.send({ team, token: token });
   },
 
   async remove(req, res){
     const { teamId } = req.params;
-
+    
     const team = await Team.findByPk(teamId);
     if (!team) {
-      return res.status(400).json({ error: `O Tema ${teamId} não existe` })
+      return res.status(400).json({ error: `O time ${teamId} não existe` })
     }
 
     await Team.destroy({

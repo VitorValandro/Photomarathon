@@ -1,2 +1,3 @@
 node_modules/
-/uploads/*.jpg\n*.jpeg\n*.png\n*.gif\n
+server/uploads/*.jpg\n*.jpeg\n*.png\n*.gif\n
+server/src/config/authConfig.json

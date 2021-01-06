@@ -33,7 +33,7 @@ module.exports = {
     });
 
     if (!subtheme) {
-      return res.status(400).json({ error: `O tema de id ${subthemeId} não foi encontrado` })
+      return res.status(400).json({ error: `O subtema de id ${subthemeId} não foi encontrado` })
     }
 
     return res.json(subtheme.photos);

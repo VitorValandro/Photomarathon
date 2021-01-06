@@ -18,7 +18,6 @@ module.exports = {
       // o nome do arquivo da foto será < nome_do_grupo-nome_do_tema.<ext> >
       const fileName = `${team.name}-${subtheme.title}${path.extname(file.originalname)}`.replace(/ /g, "_");
 
-
       cb(null, fileName);
     },
   })
