@@ -16,10 +16,10 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      themeId: {
+      subthemeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'themes', key: 'id' },
+        references: { model: 'subthemes', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },

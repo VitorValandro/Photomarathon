@@ -2,7 +2,7 @@ const uploadPhotoMiddleware = require('../config/uploadConfig');
 
 const Photo = require('../models/Photo');
 const Team = require('../models/Team');
-const Theme = require('../models/Theme');
+const Subtheme = require('../models/Subtheme');
 
 module.exports = {
   async indexAll(req, res) {
@@ -25,28 +25,28 @@ module.exports = {
     return res.json(team.photos);
   },
 
-  async indexByTheme(req, res) {
-    const { themeId } = req.params;
+  async indexBySubtheme(req, res) {
+    const { subthemeId } = req.params;
 
-    const theme = await Theme.findByPk(themeId, {
+    const subtheme = await Subtheme.findByPk(subthemeId, {
       include: { association: 'photos' }
     });
 
-    if (!theme) {
-      return res.status(400).json({ error: `O tema de id ${themeId} não foi encontrado` })
+    if (!subtheme) {
+      return res.status(400).json({ error: `O tema de id ${subthemeId} não foi encontrado` })
     }
 
-    return res.json(theme.photos);
+    return res.json(subtheme.photos);
   },
 
   async store(req, res) {
     const { teamId } = req.params;
-    const { themeId } = req.body;
+    const { subthemeId } = req.body;
     const { filename } = req.file;
 
     const photo = await Photo.create({
       teamId,
-      themeId,
+      subthemeId,
       filename,
     });
 

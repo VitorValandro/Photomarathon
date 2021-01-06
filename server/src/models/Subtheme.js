@@ -11,6 +11,7 @@ class Subtheme extends Model {
   }
 
   static associate(models) {
+    this.hasMany(models.Photo, { foreignKey: 'subthemeId', as: 'photos' });
     this.belongsTo(models.Theme, { foreignKey: 'themeId', as: 'theme' });
   }
 }

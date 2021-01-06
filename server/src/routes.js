@@ -33,7 +33,7 @@ routes.delete('/themes/:themeId/subthemes/:subthemeId', SubthemeController.remov
 
 routes.get('/photos', PhotoController.indexAll);
 routes.get('/photos/:teamId', PhotoController.indexByTeam);
-routes.get('/photos/:themeId', PhotoController.indexByTheme);
+routes.get('/photos/:subthemeId', PhotoController.indexBySubtheme);
 
 routes.get('/', (req, res) => {
   return res.json({hello:'world'});
