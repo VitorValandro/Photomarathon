@@ -36,9 +36,9 @@ module.exports = {
   },
 
   async remove(req, res) {
-    const { memberId } = req.params;
+    const { teamId, memberId } = req.params;
 
-    const member = await Team.findByPk(memberId);
+    const member = await Member.findByPk(memberId);
     if (!member) {
       return res.status(400).json({ error: `O membro ${memberId} não existe` })
     }

@@ -16,7 +16,7 @@ const upload = multer(uploadConfig);
 
 routes.get('/teams', authMiddleware, TeamController.index); // apenas time logado
 routes.post('/teams', TeamController.store); // liberado
-routes.delete('/teams/:teamId', authMiddleware, TeamController.remove); // apenas admin
+routes.delete('/teams/:teamId', TeamController.remove); // apenas admin
 
 routes.post('/teams/login', AuthController.login); // liberado
 
