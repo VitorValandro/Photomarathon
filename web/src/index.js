@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 
-import Landing from './pages/Landing/Landing'
+import Routes from './routes';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Landing />
+    <Routes />
   </React.StrictMode>,
   document.getElementById('root')
 );

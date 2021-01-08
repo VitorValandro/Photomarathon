@@ -7,17 +7,23 @@
 body {
     font-family: 'Open Sans', sans-serif;
 }
-.container {
+
+.container-hide{
+    display: none;
+}
+
+.container-show {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100vw;
     height: 100vh;
     background-color: #ecf0f1;
 }
 .content {
     background-color: #fff;
     border-radius: 15px;
-    width: 1280px;
+    width: 960px;
     height: 75%;
     justify-content: space-between;
     align-items: center;
@@ -35,7 +41,7 @@ body {
     left: 0;
 }
 .title {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
     word-wrap: break-word;
 }
@@ -46,7 +52,7 @@ body {
     color: #58af9b;
 }
 .description {
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 300;
     line-height: 30px;
 }
@@ -138,7 +144,7 @@ input:-webkit-autofill
 }
 .password {
     color: #34495e;
-    font-size: 14px;
+    font-size: 10px;
     margin: 15px 0;
     text-align: center;
 }

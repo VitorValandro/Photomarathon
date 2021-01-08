@@ -1,10 +1,17 @@
 import React from 'react';
 
-import AuthScreen  from '../../components/AuthScreen/AuthScreen';
+import Topbar from '../../components/Topbar/Topbar';
+import Photo from '../../components/Photo/Photo';
+import './Landing.css';
 
 function Landing() {
   return (
-    <AuthScreen />
+    <main>
+      <Topbar goBackArrow={false} auth={true}/>
+      <div className="rollScreenContainer">
+        <Photo />
+      </div>
+    </main>
   );
 }
 

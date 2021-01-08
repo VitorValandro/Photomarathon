@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap');
+.photoContainer{
+  width: 60%;
+  max-width: 60%;
+  border-radius: 15px;
+  background-color: #fff;
+  border:1px solid #58af9b;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.photoHeader{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.teamLink {
+  text-align: left;
+  width: 200px;
+  border: none;
+  text-decoration: none;
+  background-color: white;
+  font-family: 'Open Sans';
+  font-size: 15px;
+  font-weight: bold;
+  color: #58af9b;
+  cursor: pointer;
+}
+
+.photoHeader div {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  color:rgb(139, 139, 139);
+}
