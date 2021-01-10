@@ -9,7 +9,8 @@ function Landing() {
     <main>
       <Topbar goBackArrow={false} auth={true}/>
       <div className="rollScreenContainer">
-        <Photo />
+        <Photo href="https://ricardohage.com.br/wp-content/uploads/2019/04/fotografia-profissional_0001_paisagem.jpg"/>
+        <Photo href="https://thumbs.dreamstime.com/b/paisagem-vertical-no-por-do-sol-63763253.jpg" />
       </div>
     </main>
   );
