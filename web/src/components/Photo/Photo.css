@@ -67,6 +67,7 @@
   position: absolute;
   left: 5%;
   top: 5%;
+  cursor: pointer;
 }
 
 .modalImg{

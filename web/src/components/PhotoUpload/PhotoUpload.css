@@ -1,0 +1,117 @@
+.uploadContainer{
+  width: 100%;
+  max-width: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.dropzone{
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 95%;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  transition: height 0.2s ease;
+}
+
+.dragActive{
+  border-color: #78e5d5;
+}
+
+.dragReject{
+  border-color: #e57878;
+}
+
+.uploadMessage{
+  display: flex;
+  color: #999;
+  justify-content: center;
+  padding: 15px 0;
+  text-align: center;
+}
+
+.uploadError{
+  color:#e57878;
+}
+.uploadSuccess{
+  color:#78e5d5;
+}
+
+.fileContainer{
+  margin-top: 20px;
+  width: 100%;
+}
+
+.fileContainer li{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #444;
+}
+
+.fileInfo {
+  display: flex;
+  align-items: center;
+  justify-content:left;
+}
+
+.fileInfo div{
+  display: flex;
+  flex-direction: column;
+}
+
+.filePreview{
+  width: 36px;
+  height: 36px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  margin-right: 10px;
+}
+
+.fileInfo div span{
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.fileInfo div span button{
+  border: 0;
+  background: transparent;
+  color:#e57878;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.bottomDiv{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-top: 15px;
+}
+
+.uploadButton{
+  border: 1px solid rgb(185, 185, 185);
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  padding: 5px;
+  width: 90%;
+}
+
+.statusMessage{
+  color: #78e5d5;
+  font-weight: bold;
+}

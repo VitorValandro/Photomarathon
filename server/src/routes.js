@@ -24,7 +24,7 @@ routes.get('/teams/:teamId/members', authMiddleware, MemberController.index); //
 routes.post('/teams/:teamId/members', authMiddleware, MemberController.store); // apenas time logado
 routes.delete('/teams/:teamId/members/:memberId', authMiddleware, MemberController.remove); // apenas time logado
 
-routes.post('/teams/:teamId/photos', upload.single('file'), authMiddleware, PhotoController.store); // apenas time logado
+routes.post('/teams/:teamId/photos', upload.single('file'), /*authMiddleware,*/ PhotoController.store); // apenas time logado
 routes.delete('/teams/:teamId/photos/:photoId', PhotoController.remove); // apenas admin
 
 routes.get('/themes', ThemeController.index); // liberado
