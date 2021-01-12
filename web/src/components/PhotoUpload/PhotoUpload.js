@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import Dropzone from 'react-dropzone';
 import filesize from 'filesize';
-import Select from 'react-select';
 
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css'
@@ -56,15 +55,16 @@ function PhotoUpload() {
       }
     }).then((response) => {
       setUploadedFile({ ...uploadedFile, uploaded: true });
-    }).catch(() => {
+    }).catch((err) => {
       setUploadedFile({ ...uploadedFile, error: true });
+      console.log(err);
     })
   }
 
   function handleUpload(files){
     setUploadedFile({});
     const file = files[0];
-    
+
     const fileProps = {
       file,
       name: file.name,
@@ -91,7 +91,7 @@ function PhotoUpload() {
   };
 
   return (
-    <main className="rollScreenContainer">
+    
       <div className="uploadContainer">
         <Dropzone accept="image/*" onDropAccepted={handleUpload} multiple={false}>
           { ({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
@@ -142,7 +142,7 @@ function PhotoUpload() {
               </div>
             </li>
             <div className="bottomDiv">
-              {!uploadedFile.uploaded && subtheme != 0 &&(
+              {!uploadedFile.uploaded && subtheme !== 0 &&(
                 <button className="uploadButton" onClick={() => { processUpload(uploadedFile, subtheme); }}>
                   <FiUpload size={24} color={"#999"}/>
                 </button>
@@ -153,8 +153,7 @@ function PhotoUpload() {
             </div>
           </div>
         ) }
-      </div> 
-    </main>
+      </div>
   );
 }
 

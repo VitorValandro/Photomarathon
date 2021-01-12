@@ -12,7 +12,7 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-.rollScreenContainer{
+.landingContent{
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -20,4 +20,14 @@ body {
   width: 100vw;
   height: auto;
   background-color: #ecf0f1;
+}
+
+.rollScreenContainer{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 55vw;
+  height: auto;
 }

@@ -10,6 +10,7 @@ function Photo({href}){
     modal === 'none' ? setModal('flex') : setModal('none');
   }
   return(
+    
       <div className="photoContainer">
         <div className="photoHeader">
           <button type="button" className="teamLink">

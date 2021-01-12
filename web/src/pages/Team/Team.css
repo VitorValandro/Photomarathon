@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.teamContent{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100vw;
+  height: auto;
+  background-color: #ecf0f1;
+  
+}
+
+.teamInfoContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 30%;
+  height: auto;
+  max-height: 90vh;
+  position: sticky;
+  top:10%;
+}
+
+.infoContainer{
+  margin: 50px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.teamName{
+  text-align: center;
+  font-family: 'Open Sans';
+  font-size: 17px;
+  font-weight: bold;
+  color: #58af9b;
+}
+
+.memberPresentation{
+  margin-top: 10px;
+  text-align: center;
+  color:rgb(139, 139, 139);
+}
+
+.teamMembers{
+  margin-top: 10px;
+}
+
+.memberInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.memberInfo div{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.memberName, .memberRegister{
+  color: rgb(139, 139, 139);
+  margin: 3px 0 0 5px;
+  max-width: 225px;
+  word-wrap: break-word;
+}
+
+.teamPhotosContainer{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 80%;
+  height: auto;
+}
+
+.btnDiv{
+  margin: 0 50px;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.addMemberBtn{
+  background-color: #fff;
+  border:1px solid #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  padding: 5px;
+}
+
+.addMemberForm{
+  background: #fff;
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Open Sans';
+}
+
+.addMemberForm span{
+  text-align: center;
+  color: #58af9b;
+  font-weight: bold;
+}
+
+.addMemberForm fieldset{
+  margin-top: 5px;
+  border: none;
+}
+
+.addMemberInputBlock{
+  display: flex;
+  justify-content: space-between;
+  margin-top:5px;
+  text-align: left;
+}
+
+.addMemberInputBlock label{
+  color:rgb(139, 139, 139);
+}
+
+.addMemberInputBlock input{
+  width: 80%;
+  border: 1px solid rgb(189, 189, 189);
+  border-radius: 5px;
+  padding-left: 5px;
+}
+
