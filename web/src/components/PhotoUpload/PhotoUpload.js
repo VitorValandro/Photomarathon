@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Dropzone from 'react-dropzone';
 import filesize from 'filesize';
+import Select from 'react-select';
 
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css'
-import { MdCheckCircle, MdError, MdLink } from 'react-icons/md';
+import { MdCheckCircle, MdError } from 'react-icons/md';
 import { FiUpload } from 'react-icons/fi';
 
 import "./PhotoUpload.css";
@@ -14,11 +15,36 @@ import api from '../../services/api';
 
 function PhotoUpload() {
   const [uploadedFile, setUploadedFile] = useState('');
+  const [options, setOptions] = useState([]);
+  const [subtheme, setSubtheme] = useState(0);
 
-  function processUpload(file) {
+  useEffect(() => {
+    loadSubthemes(2)
+  }, []);
+
+  async function loadSubthemes(themeId){
+    let data;
+    let options = [];
+    await api.get(`/themes/${themeId}/subthemes`)
+      .then((response) => {
+        data = response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    data.forEach((subtheme) => {
+      options.push(
+        { value: subtheme.id, label: subtheme.title }
+      )
+    });
+    setOptions(options);
+  }
+
+  function processUpload(file, subtheme) {
     const data = new FormData();
+    console.log(subtheme);
 
-    data.append('subthemeId', 2);
+    data.append('subthemeId', subtheme);
     data.append('file', file.file);
 
     api.post('/teams/2/photos', data, {
@@ -50,7 +76,6 @@ function PhotoUpload() {
     }
     
     setUploadedFile(fileProps);
-    
   };
 
   function renderDragMessage(isDragActive, isDragReject){
@@ -79,6 +104,13 @@ function PhotoUpload() {
             </div>
           ) }
         </Dropzone>
+        <select className={'themeSelect'} defaultValue={0}onChange={(e) => {setSubtheme(e.target.value); console.log(subtheme)}}>
+          <option value={0} disabled>Selecione o subtema</option>
+          {options.map(option => {
+            return (
+              <option className={'selectOption'} key={option.value} value={option.value}>{option.label}</option>
+          )}) }
+        </select>
         { !!uploadedFile.name && (
           <div className="fileContainer">
             <li>
@@ -86,7 +118,11 @@ function PhotoUpload() {
                 <div className="filePreview" style={{ backgroundImage: `url(${uploadedFile.preview})` }} />
                 <div>
                   <strong>{uploadedFile.name}</strong>
-                  <span>{uploadedFile.readableSize}<button onClick={() => { setUploadedFile({}) }}>Excluir</button></span>
+                  <span>{uploadedFile.readableSize}
+                  {!uploadedFile.uploaded && (
+                    <button onClick={() => { setUploadedFile({}) }}>Excluir</button>
+                  )}
+                  </span>
                 </div>
               </div>
               <div>
@@ -106,8 +142,8 @@ function PhotoUpload() {
               </div>
             </li>
             <div className="bottomDiv">
-              {!uploadedFile.uploaded &&(
-                <button className="uploadButton" onClick={() => { processUpload(uploadedFile); }}>
+              {!uploadedFile.uploaded && subtheme != 0 &&(
+                <button className="uploadButton" onClick={() => { processUpload(uploadedFile, subtheme); }}>
                   <FiUpload size={24} color={"#999"}/>
                 </button>
               )}

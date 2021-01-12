@@ -115,3 +115,17 @@
   color: #78e5d5;
   font-weight: bold;
 }
+
+.themeSelect{
+  margin-top: 10px;
+  font-family: 'Open Sans', sans-serif;
+  width: 90%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid rgb(185, 185, 185);
+  border-radius: 5px;
+  color: rgb(70, 70, 70);
+  box-shadow: none;
+}
