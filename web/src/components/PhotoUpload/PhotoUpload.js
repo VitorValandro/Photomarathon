@@ -41,7 +41,6 @@ function PhotoUpload() {
 
   function processUpload(file, subtheme) {
     const data = new FormData();
-    console.log(subtheme);
 
     data.append('subthemeId', subtheme);
     data.append('file', file.file);

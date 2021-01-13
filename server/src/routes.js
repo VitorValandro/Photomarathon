@@ -20,8 +20,8 @@ routes.delete('/teams/:teamId', TeamController.remove); // apenas admin
 
 routes.post('/teams/login', AuthController.login); // liberado
 
-routes.get('/teams/:teamId/members', authMiddleware, MemberController.index); // apenas time logado
-routes.post('/teams/:teamId/members', authMiddleware, MemberController.store); // apenas time logado
+routes.get('/teams/:teamId/members', MemberController.index); // liberado
+routes.post('/teams/:teamId/members', /*authMiddleware,*/ MemberController.store); // apenas time logado
 routes.delete('/teams/:teamId/members/:memberId', authMiddleware, MemberController.remove); // apenas time logado
 
 routes.post('/teams/:teamId/photos', upload.single('file'), /*authMiddleware,*/ PhotoController.store); // apenas time logado
