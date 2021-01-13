@@ -4,7 +4,8 @@ import Topbar from '../../components/Topbar/Topbar';
 import Photo from '../../components/Photo/Photo';
 import PhotoUpload from '../../components/PhotoUpload/PhotoUpload';
 
-import { FiUser, FiPlus, FiArrowRight } from 'react-icons/fi';
+import { FiUser, FiPlus, FiArrowRight, FiX } from 'react-icons/fi';
+import { MdRemoveCircle } from 'react-icons/md';
 
 import './Team.css';
 import api from '../../services/api';
@@ -26,6 +27,15 @@ function Team() {
         setMembersArray(response.data);
       })
       .catch(err => console.log(err))
+  }
+
+  async function handleMemberDelete(member){
+    await api.delete(`teams/${teamId}/members/${member.id}`)
+      .then(response => {
+        setValidationMsg('Success');
+        setValidationMsg('');
+      })
+      .catch(err => {console.log(err)});
   }
 
   function handleMemberSubmit(event){
@@ -75,8 +85,15 @@ function Team() {
                         <FiUser size={24} color='#58af9b' />
                         <span className="memberName">{member.name}</span>
                       </div>
-
-                      <span className="memberRegister">{member.registration}</span>
+                      <div>
+                        <span className="memberRegister">{member.registration}</span>
+                        <MdRemoveCircle 
+                          onClick={() => {handleMemberDelete(member)}} 
+                          size={24} 
+                          color="#e57878" 
+                          style={{marginLeft:'5px', cursor:'pointer'}}
+                        />
+                      </div>
                     </li>   
                   );
                 })

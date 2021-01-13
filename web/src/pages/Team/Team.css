@@ -68,6 +68,10 @@ body {
   margin-top: 5px;
 }
 
+.memberInfo + .memberInfo{
+  margin-top: 20px;
+}
+
 .memberInfo div{
   display: flex;
   flex-direction: row;
