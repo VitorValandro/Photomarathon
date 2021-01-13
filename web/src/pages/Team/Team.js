@@ -4,7 +4,7 @@ import Topbar from '../../components/Topbar/Topbar';
 import Photo from '../../components/Photo/Photo';
 import PhotoUpload from '../../components/PhotoUpload/PhotoUpload';
 
-import { FiUser, FiPlus, FiArrowRight, FiX } from 'react-icons/fi';
+import { FiUser, FiPlus, FiArrowRight } from 'react-icons/fi';
 import { MdRemoveCircle } from 'react-icons/md';
 
 import './Team.css';
@@ -17,7 +17,9 @@ function Team() {
   const [validationMsg, setValidationMsg] = useState('');
   const [membersArray, setMembersArray] = useState([]);
 
-  useEffect(getMembersList, [validationMsg])
+  useEffect(() => {
+    getMembersList()
+  }, [validationMsg])
 
   const teamId = 2;
 
@@ -32,8 +34,8 @@ function Team() {
   async function handleMemberDelete(member){
     await api.delete(`teams/${teamId}/members/${member.id}`)
       .then(response => {
-        setValidationMsg('Success');
-        setValidationMsg('');
+        setValidationMsg('Success'); // essa atribuição é necessária para a tela reagir à mudança
+        setValidationMsg(''); // desatribui pra voltar ao normal
       })
       .catch(err => {console.log(err)});
   }

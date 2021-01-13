@@ -24,7 +24,7 @@ body {
 .teamInfoContainer{
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   width: 30%;
   height: auto;
   max-height: 90vh;
