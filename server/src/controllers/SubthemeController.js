@@ -2,7 +2,13 @@ const Subtheme = require('../models/Subtheme');
 const Theme = require('../models/Theme');
 
 module.exports = {
-  async index(req, res) {
+  async indexAll(req, res) {
+    const subthemes = await Subtheme.findAll();
+
+    return res.json(subthemes);
+  },
+
+  async indexByTheme(req, res){
     const { themeId } = req.params;
 
     const theme = await Theme.findByPk(themeId, {

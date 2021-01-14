@@ -14,7 +14,7 @@ const authMiddleware = require('./middlewares/auth');
 const routes = express.Router();
 const upload = multer(uploadConfig);
 
-routes.get('/teams', authMiddleware, TeamController.index); // apenas time logado
+routes.get('/teams', TeamController.index); // liberado
 routes.post('/teams', TeamController.store); // liberado
 routes.delete('/teams/:teamId', TeamController.remove); // apenas admin
 
@@ -31,9 +31,10 @@ routes.get('/themes', ThemeController.index); // liberado
 routes.post('/themes', ThemeController.store); // apenas admin
 routes.delete('/themes/:themeId', ThemeController.remove); // apenas admin
 
-routes.get('/themes/:themeId/subthemes', SubthemeController.index); // liberado
+routes.get('/themes/subthemes', SubthemeController.indexAll); // liberado
+routes.get('/themes/:themeId/subthemes', SubthemeController.indexByTheme); // liberado
 routes.post('/themes/:themeId/subthemes', SubthemeController.store); // apenas admin
-routes.delete('/themes/:themeId/subthemes/:subthemeId', SubthemeController.remove); // apenas admin
+routes.delete('/themes/subthemes/:subthemeId', SubthemeController.remove); // apenas admin
 
 routes.get('/photos', PhotoController.indexAll); // liberado
 routes.get('/photos/teams/:teamId', PhotoController.indexByTeam); // liberado

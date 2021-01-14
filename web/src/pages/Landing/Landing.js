@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Topbar from '../../components/Topbar/Topbar';
 import Photo from '../../components/Photo/Photo';
 import PhotoUpload from '../../components/PhotoUpload/PhotoUpload';
 
 import './Landing.css';
+import api from '../../services/api';
 
 function Landing() {
+  const [photosArray, setPhotosArray] = useState([]);
+
+  useEffect(() => { getAllPhotos() }, [])
+
+  async function getAllPhotos(){
+    await api.get(`/photos`)
+      .then((response) => {
+        setPhotosArray(response.data);
+      })
+      .catch(err => console.log(err))
+  } 
+
   return (
     <main>
       <Topbar goBackArrow={false} auth={true} team={true}/>
@@ -15,8 +28,11 @@ function Landing() {
           <main className="rollScreenContainer">
             <PhotoUpload />
           </main>
-          <Photo href="https://ricardohage.com.br/wp-content/uploads/2019/04/fotografia-profissional_0001_paisagem.jpg"/>
-          <Photo href="https://thumbs.dreamstime.com/b/paisagem-vertical-no-por-do-sol-63763253.jpg" />
+          {photosArray.map((photo => {
+            return(
+              <Photo key={photo.id} photo={photo}/>
+            )
+          }))}
         </div>
       </div>
     </main>
