@@ -54,6 +54,10 @@ function PhotoUpload() {
       }
     }).then((response) => {
       setUploadedFile({ ...uploadedFile, uploaded: true });
+      setInterval(() => {
+        window.location.reload();
+      }, 1000);
+      
     }).catch((err) => {
       setUploadedFile({ ...uploadedFile, error: true });
       console.log(err);

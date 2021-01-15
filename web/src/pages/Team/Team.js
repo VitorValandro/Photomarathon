@@ -16,10 +16,15 @@ function Team() {
   const [memberRegister, setMemberRegister] = useState('');
   const [validationMsg, setValidationMsg] = useState('');
   const [membersArray, setMembersArray] = useState([]);
+  const [photosArray, setPhotosArray] = useState([]);
 
   useEffect(() => {
-    getMembersList()
-  }, [validationMsg])
+    getMembersList();
+  }, [validationMsg]);
+
+  useEffect(() => {
+    getTeamPhotos();
+  }, []);
 
   const teamId = 2;
 
@@ -39,6 +44,14 @@ function Team() {
       })
       .catch(err => {console.log(err)});
   }
+
+  async function getTeamPhotos() {
+    await api.get(`/photos/teams/${teamId}`)
+      .then((response) => {
+        setPhotosArray(response.data);
+      })
+      .catch(err => console.log(err))
+  } 
 
   function handleMemberSubmit(event){
     event.preventDefault();
@@ -152,8 +165,11 @@ function Team() {
         <div style={{alignItems: 'center'}}>
           <div className="teamPhotosContainer">
             <PhotoUpload />
-            <Photo href="https://ricardohage.com.br/wp-content/uploads/2019/04/fotografia-profissional_0001_paisagem.jpg" />
-            <Photo href="https://thumbs.dreamstime.com/b/paisagem-vertical-no-por-do-sol-63763253.jpg" />
+            {photosArray.map((photo => {
+              return (
+                <Photo key={photo.id} photo={photo} />
+              )
+            }))}
           </div>
         </div>
       </div>

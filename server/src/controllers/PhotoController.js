@@ -6,7 +6,9 @@ const Subtheme = require('../models/Subtheme');
 
 module.exports = {
   async indexAll(req, res) {
-    const photos = await Photo.findAll();
+    const photos = await Photo.findAll({
+      order: [['createdAt', 'DESC']]
+    });
 
     return res.json(photos);
   },
@@ -29,7 +31,7 @@ module.exports = {
     const { subthemeId } = req.params;
 
     const subtheme = await Subtheme.findByPk(subthemeId, {
-      include: { association: 'photos' }
+      include: { association: 'photos' },
     });
 
     if (!subtheme) {

@@ -11,7 +11,9 @@ function Photo({photo}){
   const [subthemeName, setSubthemeName] = useState('');
   const [teamName, setTeamName] = useState('');
 
-  useEffect(() => {getPhotoAssociationsInfo()}, []);
+  useEffect(() => {
+    getPhotoAssociationsInfo();
+  }, []);
 
   async function getPhotoAssociationsInfo(){
     await api.get(`/themes/subthemes`)
@@ -30,6 +32,9 @@ function Photo({photo}){
         });
         setTeamName(teamObject[0].name);
       })
+      .catch(err => console.log(err));
+
+    return;
   }
 
   function handleModal(){
