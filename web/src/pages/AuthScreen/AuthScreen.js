@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./AuthScreen.css";
 
 import { FiUsers, FiMail, FiLock } from "react-icons/fi";
 import Topbar from "../../components/Topbar/Topbar";
+import api from '../../services/api';
 
 function AuthScreen(){
+  const [teamName, setTeamName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [validationMsg, setValidationMsg] = useState('');
+
+  function handleTeamSubmit(event){
+    event.preventDefault();
+    const nameRegex = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ']+$/;
+
+    if (!nameRegex.test(teamName)) {
+      setValidationMsg('O nome não deve conter números, caracteres especiais ou espaços em branco');
+      return;
+    }
+
+    api.post(`/teams`, {
+      "name":teamName,
+      "email":email,
+      "password":password
+      })
+      .then((response) => {
+        setValidationMsg('Time inscrito com sucesso!');
+      })
+      .catch((err) => { 
+        setValidationMsg('Um erro ocorreu ao registrar o time')
+        console.log(err); 
+      });
+  }
 
   function formTransition(){
     const body = document.querySelector("body");
@@ -27,21 +55,41 @@ function AuthScreen(){
             <h2 className="title title-second">Inscreva um novo grupo</h2>
             <p className="description description-second">use seu email para cadastrar</p>
             <p className="description description-second">você pode inscrever os membros do seu grupo depois</p>
-            <form className="form">
-              <label className="label-input" htmlFor="">
+            <form className="form" onSubmit={handleTeamSubmit}>
+              <label className="label-input" htmlFor="teamName">
                 <FiUsers size={30} style={{ marginLeft: 10 }} color="#7f8c8d" />
-                <input type="text" placeholder="Nome do grupo" />
+                <input 
+                  type="text"
+                  value={teamName}
+                  placeholder="Nome do grupo"
+                  onChange={e => { setTeamName(e.target.value) }}
+                  required
+                />
               </label>
 
-              <label className="label-input" htmlFor="">
+              <label className="label-input" htmlFor="email">
                 <FiMail size={30} style={{ marginLeft: 10 }} color="#7f8c8d" />
-                <input type="email" placeholder="Email do líder" />
+                <input 
+                  type="email" 
+                  value={email}
+                  placeholder="Email do líder"
+                  onChange={e => { setEmail(e.target.value) }}
+                  required
+                />
               </label>
 
-              <label className="label-input" htmlFor="">
+              <label className="label-input" htmlFor="password">
                 <FiLock size={30} style={{ marginLeft: 10 }} color="#7f8c8d" />
-                <input type="password" placeholder="Senha" />
+                <input 
+                  type="password" 
+                  placeholder="Senha" 
+                  value={password}
+                  onChange={e => { setPassword(e.target.value) }}
+                  required
+                />
               </label>
+
+              <span className="validationMsgSpan">{validationMsg}</span>
 
               <button className="btn">Registrar</button>        
             </form>
@@ -58,12 +106,12 @@ function AuthScreen(){
             <h2 className="title title-second">Entre na conta do seu grupo</h2>
             <p className="description description-second">Insira as informações de seu time</p>
             <form className="form">
-              <label className="label-input" htmlFor="">
+              <label className="label-input" htmlFor="loginMail">
                 <FiMail size={30} style={{ marginLeft: 10 }} color="#7f8c8d" />
                 <input type="email" placeholder="Email" />
               </label>
 
-              <label className="label-input" htmlFor="">
+              <label className="label-input" htmlFor="loginPass">
                 <FiLock size={30} style={{ marginLeft: 10 }} color="#7f8c8d" />
                 <input type="password" placeholder="Senha" />
               </label>

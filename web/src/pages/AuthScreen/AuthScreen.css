@@ -203,6 +203,13 @@ input:-webkit-autofill
     animation: rightDisplacement 1.3s; /*MODIFIQUEI DE 3s PARA 1.3s*/
 }
 
+.validationMsgSpan{
+    margin: 5px;
+    color: orange;
+    text-align: center;
+    word-wrap: break-word;
+}
+
 /*ANIMAÇÃOO CSS PARA O CONTEÚDO*/
 
 @keyframes leftDisplacement {

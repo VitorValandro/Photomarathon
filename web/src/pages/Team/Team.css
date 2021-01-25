@@ -155,6 +155,6 @@ body {
 }
 
 .validationMessage{
-  color:#e57878;
+  color:orange;
   font-weight: normal;
 }
