@@ -10,14 +10,37 @@ function AuthScreen(){
   const [teamName, setTeamName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [validationMsg, setValidationMsg] = useState('');
+  const [SubmitValidationMsg, setSubmitValidationMsg] = useState('');
+  const [LoginValidationMsg, setLoginValidationMsg] = useState('');
+
+  function handleTeamLogin(event){
+    event.preventDefault();
+
+    api.post(`/teams/login`, {
+      "email": email,
+      "password": password
+    })
+      .then((response) => {
+        setLoginValidationMsg('Time inscrito com sucesso!');
+        console.log(response.data.token);
+      })
+      .catch((err) => {
+        if (err.response.data){
+          const { error } = err.response.data
+          setLoginValidationMsg(error);
+        }
+        else{
+          setLoginValidationMsg('Um erro ocorreu ao registrar o time');
+        }
+      });
+  }
 
   function handleTeamSubmit(event){
     event.preventDefault();
     const nameRegex = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ']+$/;
 
     if (!nameRegex.test(teamName)) {
-      setValidationMsg('O nome não deve conter números, caracteres especiais ou espaços em branco');
+      setSubmitValidationMsg('O nome não deve conter números, caracteres especiais ou espaços em branco');
       return;
     }
 
@@ -27,10 +50,10 @@ function AuthScreen(){
       "password":password
       })
       .then((response) => {
-        setValidationMsg('Time inscrito com sucesso!');
+        setSubmitValidationMsg('Time inscrito com sucesso!');
       })
       .catch((err) => { 
-        setValidationMsg('Um erro ocorreu ao registrar o time')
+        setSubmitValidationMsg('Um erro ocorreu ao registrar o time')
         console.log(err); 
       });
   }
@@ -60,7 +83,6 @@ function AuthScreen(){
                 <FiUsers size={30} style={{ marginLeft: 10 }} color="#7f8c8d" />
                 <input 
                   type="text"
-                  value={teamName}
                   placeholder="Nome do grupo"
                   onChange={e => { setTeamName(e.target.value) }}
                   required
@@ -71,7 +93,6 @@ function AuthScreen(){
                 <FiMail size={30} style={{ marginLeft: 10 }} color="#7f8c8d" />
                 <input 
                   type="email" 
-                  value={email}
                   placeholder="Email do líder"
                   onChange={e => { setEmail(e.target.value) }}
                   required
@@ -83,13 +104,12 @@ function AuthScreen(){
                 <input 
                   type="password" 
                   placeholder="Senha" 
-                  value={password}
                   onChange={e => { setPassword(e.target.value) }}
                   required
                 />
               </label>
 
-              <span className="validationMsgSpan">{validationMsg}</span>
+              <span className="validationMsgSpan">{SubmitValidationMsg}</span>
 
               <button className="btn">Registrar</button>        
             </form>
@@ -105,16 +125,28 @@ function AuthScreen(){
           <div className="second-column">
             <h2 className="title title-second">Entre na conta do seu grupo</h2>
             <p className="description description-second">Insira as informações de seu time</p>
-            <form className="form">
+            <form className="form" onSubmit={handleTeamLogin}>
               <label className="label-input" htmlFor="loginMail">
                 <FiMail size={30} style={{ marginLeft: 10 }} color="#7f8c8d" />
-                <input type="email" placeholder="Email" />
+                <input 
+                  type="email" 
+                  placeholder="Email"
+                  onChange={e => { setEmail(e.target.value) }}
+                  required
+                />
               </label>
 
               <label className="label-input" htmlFor="loginPass">
                 <FiLock size={30} style={{ marginLeft: 10 }} color="#7f8c8d" />
-                <input type="password" placeholder="Senha" />
+                <input 
+                  type="password" 
+                  placeholder="Senha" 
+                  onChange={e => { setPassword(e.target.value) }}
+                  required
+                />
               </label>
+
+              <span className="validationMsgSpan">{LoginValidationMsg}</span>
               
               <button className="btn">Entrar</button>
               </form>
