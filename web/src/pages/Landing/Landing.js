@@ -6,6 +6,7 @@ import PhotoUpload from '../../components/PhotoUpload/PhotoUpload';
 
 import './Landing.css';
 import api from '../../services/api';
+import { isAuthenticated } from "../../services/auth";
 
 function Landing() {
   const [photosArray, setPhotosArray] = useState([]);
@@ -26,7 +27,10 @@ function Landing() {
       <div className="landingContent">
         <div className="rollScreenContainer">
           <main className="rollScreenContainer">
-            <PhotoUpload />
+            {isAuthenticated() ? (
+              <PhotoUpload />
+            ) : (<span></span>)
+            }
           </main>
           {photosArray.map((photo => {
             return(

@@ -5,6 +5,7 @@ import "./AuthScreen.css";
 import { FiUsers, FiMail, FiLock } from "react-icons/fi";
 import Topbar from "../../components/Topbar/Topbar";
 import api from '../../services/api';
+import { login } from '../../services/auth';
 
 function AuthScreen(){
   const [teamName, setTeamName] = useState('');
@@ -21,8 +22,8 @@ function AuthScreen(){
       "password": password
     })
       .then((response) => {
-        setLoginValidationMsg('Time inscrito com sucesso!');
-        console.log(response.data.token);
+        setLoginValidationMsg('Login realizado com sucesso!');
+        login(response.data.token);
       })
       .catch((err) => {
         if (err.response.data){

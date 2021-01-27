@@ -9,6 +9,7 @@ import { MdRemoveCircle } from 'react-icons/md';
 
 import './Team.css';
 import api from '../../services/api';
+import { isAuthenticated } from "../../services/auth";
 
 function Team() {
   const [showAddMember, setShowAddMember] = useState(false);
@@ -164,7 +165,10 @@ function Team() {
         </div>
         <div style={{alignItems: 'center'}}>
           <div className="teamPhotosContainer">
-            <PhotoUpload />
+            {isAuthenticated() ? (
+              <PhotoUpload />
+              ): (<span></span>)
+            }
             {photosArray.map((photo => {
               return (
                 <Photo key={photo.id} photo={photo} />
