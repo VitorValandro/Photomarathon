@@ -23,7 +23,7 @@ function Landing() {
 
   return (
     <main>
-      <Topbar goBackArrow={false} auth={true} team={true}/>
+      <Topbar goBackArrow={false} />
       <div className="landingContent">
         <div className="rollScreenContainer">
           <main className="rollScreenContainer">

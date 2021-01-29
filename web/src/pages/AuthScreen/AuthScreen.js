@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import "./AuthScreen.css";
 
 import { FiUsers, FiMail, FiLock } from "react-icons/fi";
+import { useHistory } from "react-router-dom";
+
 import Topbar from "../../components/Topbar/Topbar";
 import api from '../../services/api';
 import { login } from '../../services/auth';
+
 
 function AuthScreen(){
   const [teamName, setTeamName] = useState('');
@@ -13,6 +16,8 @@ function AuthScreen(){
   const [password, setPassword] = useState('');
   const [SubmitValidationMsg, setSubmitValidationMsg] = useState('');
   const [LoginValidationMsg, setLoginValidationMsg] = useState('');
+
+  const history = useHistory();
 
   function handleTeamLogin(event){
     event.preventDefault();
@@ -23,7 +28,8 @@ function AuthScreen(){
     })
       .then((response) => {
         setLoginValidationMsg('Login realizado com sucesso!');
-        login(response.data.token);
+        login(response.data.token, response.data.team.id);
+        history.push('/');
       })
       .catch((err) => {
         if (err.response.data){
@@ -52,6 +58,8 @@ function AuthScreen(){
       })
       .then((response) => {
         setSubmitValidationMsg('Time inscrito com sucesso!');
+        login(response.data.token, response.data.team.id);
+        history.push('/');
       })
       .catch((err) => { 
         setSubmitValidationMsg('Um erro ocorreu ao registrar o time')

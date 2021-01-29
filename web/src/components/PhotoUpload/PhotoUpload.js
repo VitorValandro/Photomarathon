@@ -11,6 +11,7 @@ import { FiUpload } from 'react-icons/fi';
 import "./PhotoUpload.css";
 
 import api from '../../services/api';
+import { getTeamThatIsAuthenticated } from "../../services/auth";
 
 function PhotoUpload() {
   const [uploadedFile, setUploadedFile] = useState('');
@@ -45,7 +46,7 @@ function PhotoUpload() {
     data.append('subthemeId', subtheme);
     data.append('file', file.file);
 
-    api.post('/teams/2/photos', data, {
+    api.post(`/teams/${getTeamThatIsAuthenticated()}/photos`, data, {
       onUploadProgress: e => {
 
         const progress = parseInt(Math.round((e.loaded * 100) / e.total)) // regra de três

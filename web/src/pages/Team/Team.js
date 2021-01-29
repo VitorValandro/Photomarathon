@@ -9,7 +9,7 @@ import { MdRemoveCircle } from 'react-icons/md';
 
 import './Team.css';
 import api from '../../services/api';
-import { isAuthenticated } from "../../services/auth";
+import { getTeamThatIsAuthenticated, isAuthenticated } from "../../services/auth";
 import { useParams } from 'react-router-dom';
 
 function Team() {
@@ -19,18 +19,19 @@ function Team() {
   const [validationMsg, setValidationMsg] = useState('');
   const [membersArray, setMembersArray] = useState([]);
   const [photosArray, setPhotosArray] = useState([]);
-  const [teamName, setTeamName] = useState('');
+  const [teamInfo, setTeamInfo] = useState({});
+
+  const { teamId } = useParams();
 
   useEffect(() => {
     getMembersList();
-    getTeamName();
   }, [validationMsg]);
 
   useEffect(() => {
     getTeamPhotos();
-  }, []);
-
-  const { teamId } = useParams();
+    getTeamInfo();
+    getMembersList();
+  }, [teamId]);
 
   async function getMembersList(){
     await api.get(`/teams/${teamId}/members`)
@@ -40,10 +41,10 @@ function Team() {
       .catch(err => console.log(err));
   }
 
-  async function getTeamName(){
+  async function getTeamInfo(){
     await api.get(`/teams/${teamId}`)
       .then((response) => {
-        setTeamName(response.data.name);
+        setTeamInfo(response.data);
       })
       .catch(err => console.log(err));
   }
@@ -97,11 +98,11 @@ function Team() {
 
   return (
     <main>
-      <Topbar goBackArrow={true} auth={false} team={false} />
+      <Topbar goBackArrow={true} />
       <div className="teamContent">
         <div className="teamInfoContainer">
           <div className="infoContainer">
-            <span className="teamName">{teamName}</span>
+            <span className="teamName">{teamInfo.name}</span>
             <span className="memberPresentation">Membros</span>
             <ul className="teamMembers">
               {membersArray.length !== 0 ? (
@@ -114,12 +115,14 @@ function Team() {
                       </div>
                       <div>
                         <span className="memberRegister">{member.registration}</span>
-                        <MdRemoveCircle 
-                          onClick={() => {handleMemberDelete(member)}} 
-                          size={24} 
-                          color="#e57878" 
-                          style={{marginLeft:'5px', cursor:'pointer'}}
-                        />
+                        {(isAuthenticated() && teamId === getTeamThatIsAuthenticated()) ? (
+                          <MdRemoveCircle 
+                            onClick={() => {handleMemberDelete(member)}} 
+                            size={24} 
+                            color="#e57878" 
+                            style={{marginLeft:'5px', cursor:'pointer'}}
+                          />
+                        ): (<span></span>)}
                       </div>
                     </li>   
                   );
@@ -131,52 +134,54 @@ function Team() {
               )}
             </ul>
           </div>
-          <div className="btnDiv">
-            {!showAddMember ? (
-              <button className="addMemberBtn" onClick={() => {setShowAddMember(true)}}><FiPlus size={24} color='#58af9b' /></button>
-            ) : (
-              <form onSubmit={handleMemberSubmit} className="addMemberForm">
-                <span>Insira os dados para inscrever um novo membro</span>
-                <fieldset>
-                  <div className="addMemberInputBlock">
-                    <label htmlFor="name">Nome</label>
-                    <input 
-                      value={memberName}
-                      type="text"
-                      onChange={e => {setMemberName(e.target.value)}}
-                      required
-                    />
-                  </div>
-                  <div className="addMemberInputBlock">
-                    <label htmlFor="registration">Matrícula</label>
-                    <input 
-                      value={memberRegister} 
-                      onChange={e => { setMemberRegister(e.target.value) }} 
-                      minLength="10"
-                      maxLength="10"
-                      required
-                    />
-                  </div>
-                </fieldset>
-                {validationMsg !== '' ? (
-                    <div className="validationContainer">
-                      <p className="validationMessage">{validationMsg}</p>
+          {(isAuthenticated() && teamId === getTeamThatIsAuthenticated()) ? (
+            <div className="btnDiv">
+              {!showAddMember ? (
+                <button className="addMemberBtn" onClick={() => {setShowAddMember(true)}}><FiPlus size={24} color='#58af9b' /></button>
+              ) : (
+                <form onSubmit={handleMemberSubmit} className="addMemberForm">
+                  <span>Insira os dados para inscrever um novo membro</span>
+                  <fieldset>
+                    <div className="addMemberInputBlock">
+                      <label htmlFor="name">Nome</label>
+                      <input 
+                        value={memberName}
+                        type="text"
+                        onChange={e => {setMemberName(e.target.value)}}
+                        required
+                      />
                     </div>
-                ) : (
-                  <span></span>
-                )
-                }
-                <button type="submit" className="addMemberBtn" style={{border:'2px dashed #ececec', marginTop:'10px'}}>
-                    <FiArrowRight size={24} color='#58af9b'/>
-                </button>
-              </form>
-            )}
-            
-          </div>
+                    <div className="addMemberInputBlock">
+                      <label htmlFor="registration">Matrícula</label>
+                      <input 
+                        value={memberRegister} 
+                        onChange={e => { setMemberRegister(e.target.value) }} 
+                        minLength="10"
+                        maxLength="10"
+                        required
+                      />
+                    </div>
+                  </fieldset>
+                  {validationMsg !== '' ? (
+                      <div className="validationContainer">
+                        <p className="validationMessage">{validationMsg}</p>
+                      </div>
+                  ) : (
+                    <span></span>
+                  )
+                  }
+                  <button type="submit" className="addMemberBtn" style={{border:'2px dashed #ececec', marginTop:'10px'}}>
+                      <FiArrowRight size={24} color='#58af9b'/>
+                  </button>
+                </form>
+              )}   
+            </div>
+            ) : (<span></span>)
+          }
         </div>
         <div style={{alignItems: 'center'}}>
           <div className="teamPhotosContainer">
-            {isAuthenticated() ? (
+            {(isAuthenticated() && teamId === getTeamThatIsAuthenticated()) ? (
               <PhotoUpload />
               ): (<span></span>)
             }

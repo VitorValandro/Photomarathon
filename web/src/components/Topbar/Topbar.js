@@ -4,12 +4,11 @@ import { FiArrowLeft, FiLogOut } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
-import { isAuthenticated, logout } from "../../services/auth";
+import { isAuthenticated, logout, getTeamThatIsAuthenticated } from "../../services/auth";
 import "./Topbar.css";
 
-function Topbar({goBackArrow=true, auth=false, team=false}) {
+function Topbar({ goBackArrow=true }) {
   const history = useHistory();
-  const { goBack } = history;
   
   function handleLogOut(){  
     logout();
@@ -20,20 +19,20 @@ function Topbar({goBackArrow=true, auth=false, team=false}) {
     <div className="topbar-container">
       <nav>
         {goBackArrow ? (
-          <button type="button" className="nav-arr nav-btn" onClick={goBack}>
+          <Link to="/" className="nav-arr nav-btn">
             <FiArrowLeft size={24} color="#58af9b" />
-          </button>
+          </Link>
         ): (
           <button style={{opacity:0}}></button>
         )}
-        {(team && isAuthenticated()) ? (
-          <Link to="/team" className="nav-btn">
+        {(isAuthenticated()) ? (
+          <Link to={`/team/${getTeamThatIsAuthenticated()}`} className="nav-btn">
             <span>TIME</span>
           </Link>
         ) : (
             <button style={{ opacity: 0 }}></button>
           )}
-        {(auth && !isAuthenticated())? (
+        {(!isAuthenticated())? (
           <Link to="/auth" className="nav-btn">
             <span>INSCREVER-SE</span>
           </Link>

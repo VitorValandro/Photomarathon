@@ -66,7 +66,9 @@ function Photo({photo}){
           <FiX size={40} color={"#FFF"} className="closeModal" onClick={handleModal}/>
           <div>
             <button type="button" className="teamLink">
-              {teamName}
+              <Link to={`/team/${photo.teamId}`} className="teamLink">
+                <span>{teamName}</span>
+              </Link>
             </button>
             <span className="themeName">{subthemeName}</span>
           </div>
