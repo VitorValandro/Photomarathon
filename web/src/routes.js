@@ -10,7 +10,7 @@ function Routes(){
       <Switch>
         <Route path="/" exact component={Landing} />
         <Route path="/auth" component={AuthScreen} />
-        <Route path="/team" component={Team} />
+        <Route path="/team/:teamId" component={Team} />
       </Switch>
     </BrowserRouter>
   )

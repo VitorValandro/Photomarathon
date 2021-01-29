@@ -17,7 +17,8 @@ module.exports = {
     const { teamId } = req.params;
 
     const team = await Team.findByPk(teamId, {
-      include: { association: 'photos' }
+      include: { association: 'photos' },
+      order: [['photos', 'createdAt', 'DESC']]
     });
 
     if (!team) {

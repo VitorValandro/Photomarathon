@@ -10,6 +10,7 @@ import { MdRemoveCircle } from 'react-icons/md';
 import './Team.css';
 import api from '../../services/api';
 import { isAuthenticated } from "../../services/auth";
+import { useParams } from 'react-router-dom';
 
 function Team() {
   const [showAddMember, setShowAddMember] = useState(false);
@@ -18,23 +19,33 @@ function Team() {
   const [validationMsg, setValidationMsg] = useState('');
   const [membersArray, setMembersArray] = useState([]);
   const [photosArray, setPhotosArray] = useState([]);
+  const [teamName, setTeamName] = useState('');
 
   useEffect(() => {
     getMembersList();
+    getTeamName();
   }, [validationMsg]);
 
   useEffect(() => {
     getTeamPhotos();
   }, []);
 
-  const teamId = 2;
+  const { teamId } = useParams();
 
   async function getMembersList(){
     await api.get(`/teams/${teamId}/members`)
       .then((response) => {
         setMembersArray(response.data);
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
+  }
+
+  async function getTeamName(){
+    await api.get(`/teams/${teamId}`)
+      .then((response) => {
+        setTeamName(response.data.name);
+      })
+      .catch(err => console.log(err));
   }
 
   async function handleMemberDelete(member){
@@ -90,7 +101,7 @@ function Team() {
       <div className="teamContent">
         <div className="teamInfoContainer">
           <div className="infoContainer">
-            <span className="teamName">Nome do time</span>
+            <span className="teamName">{teamName}</span>
             <span className="memberPresentation">Membros</span>
             <ul className="teamMembers">
               {membersArray.length !== 0 ? (

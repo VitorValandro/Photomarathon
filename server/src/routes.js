@@ -15,6 +15,7 @@ const routes = express.Router();
 const upload = multer(uploadConfig);
 
 routes.get('/teams', TeamController.index); // liberado
+routes.get('/teams/:teamId', TeamController.indexById);
 routes.post('/teams', TeamController.store); // liberado
 routes.delete('/teams/:teamId', TeamController.remove); // apenas admin
 

@@ -12,6 +12,19 @@ module.exports = {
     return res.json(teams);
   },
 
+  async indexById(req, res){
+    const { teamId } = req.params;
+    const team = await Team.findByPk(teamId, {
+      attributes: { exclude: ['password'] }
+    });
+
+    if (!team) {
+      return res.status(400).json({ error: `O time ${teamId} não existe` })
+    }
+
+    return res.json(team);
+  },
+
   async store(req, res){
     const { name, email, password } = req.body;
 

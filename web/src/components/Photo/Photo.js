@@ -3,6 +3,7 @@ import { FiX } from 'react-icons/fi';
 
 import './Photo.css';
 import api from '../../services/api';
+import { Link } from 'react-router-dom';
 
 const apiUrl = "http://localhost:3333";
 
@@ -52,9 +53,9 @@ function Photo({photo}){
   return(
       <div className="photoContainer">
         <div className="photoHeader">
-          <button type="button" className="teamLink">
-            {teamName}
-          </button>
+          <Link to={`/team/${photo.teamId}`} className="teamLink">
+            <span>{teamName}</span>
+          </Link>
           <div>
             <span className="postHour">{convertTimestampToDate(photo.createdAt)}</span>
             <span className="themeName">{subthemeName}</span>
