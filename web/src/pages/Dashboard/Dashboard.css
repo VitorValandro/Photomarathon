@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap');
+.dashboardContainer{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  background-color: #ecf0f1;
+  font-family: 'Open Sans', 'sans-serif';
+}
+
+.teamInfoContainer{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 55vw;
+  height: auto;
+  margin-top: 20px;
+}
+
+.teamInfoBlock{
+  margin: 20px 0 20px 0;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+}
+
+.teamInfoBlock div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.teamInfoTitle{
+  font-family: 'Open Sans', 'sans-serif';
+  font-weight: bold;
+  font-size: 15px;
+  color:#58af9b;
+}
+
+.teamInfoStats{
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 10px 50px;
+  width: 50%;
+}
+
+.teamInfoStats li{
+  color:rgb(139, 139, 139);
+}
+
+.teamInfoStats li span {
+  margin-left: 5px;
+  font-size: 22px;
+  font-weight: lighter;
+}
+
+.teamInfoDelete{
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 15px;
+  padding: 8px;
+  border: 0;
+  color: white;
+  background-color: #e57878;
+  text-align: center;
+  cursor: pointer;
+}
