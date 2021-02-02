@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiX, FiUsers, FiImage, FiDownload, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { MdAddCircle, MdRemoveCircle } from 'react-icons/md';
 
@@ -9,6 +9,20 @@ import api from '../../services/api';
 
 function Dashboard() {
   const [dropDownFlag, setDropDownFlag] = useState(true);
+  const [teamsInfo, setTeamsInfo] = useState([]);
+
+  useEffect(() => {
+    getTeamInfo();
+  }, []);
+
+  async function getTeamInfo(){
+    await api.get('/teamsinfo')
+      .then((response) => {
+        setTeamsInfo(response.data);
+      })
+      .catch(err => console.log(err));
+  }
+
   function handleDropDown(){
     dropDownFlag ? setDropDownFlag(false) : setDropDownFlag(true);
   }
@@ -92,36 +106,28 @@ function Dashboard() {
                 <MdAddCircle size={24} color='#58af9b' />
               </button>
             </ul>
-            
           </div>
         </div>
         <div className="teamInfoContainer">
-          <div className="teamInfoBlock">
-            <span className="teamInfoTitle">Nome do time</span>
-            <div>
-              <ul className="teamInfoStats">
-                <li title={"Número de membros inscritos no grupo"}><FiUsers size={20} color={"rgb(139,139,139)"} /><span>0</span></li>
-                <li title={"Número de imagens postadas"}><FiImage size={20} color={"rgb(139,139,139)"} /><span>0</span></li>
-              </ul>
-            </div>
-            <button className="teamInfoDelete"><FiX strokeWidth={3} size={15} color={"#FFF"} /></button>
-            <div className="teamInfoDownload">
-              <FiDownload size={20} color={"rgb(139,139,139)"} />
-            </div>
-          </div>
-          <div className="teamInfoBlock">
-            <span className="teamInfoTitle">Nome do time</span>
-            <div>
-              <ul className="teamInfoStats">
-                <li title={"Número de membros inscritos no grupo"}><FiUsers size={20} color={"rgb(139,139,139)"}/><span>0</span></li>
-                <li title={"Número de imagens postadas"}><FiImage size={20} color={"rgb(139,139,139)"} /><span>0</span></li>
-              </ul>
-            </div>
-            <button className="teamInfoDelete"><FiX strokeWidth={3} size={15} color={"#FFF"} /></button>
-            <div title={"Fazer o download de todas as fotos do grupo"} className="teamInfoDownload">
-              <FiDownload size={20} color={"rgb(139,139,139)"} />
-            </div>
-          </div>
+          {teamsInfo.length !== 0 ? (
+            teamsInfo.map(teamInfo => {
+              return(
+                <div key={teamInfo.id} className="teamInfoBlock">
+                  <span className="teamInfoTitle">{teamInfo.name}</span>
+                  <div>
+                    <ul className="teamInfoStats">
+                      <li title={"Número de membros inscritos no grupo"}><FiUsers size={20} color={"rgb(139,139,139)"} /><span>{teamInfo.members}</span></li>
+                      <li title={"Número de imagens postadas"}><FiImage size={20} color={"rgb(139,139,139)"} /><span>{teamInfo.photos}</span></li>
+                    </ul>
+                  </div>
+                  <button className="teamInfoDelete"><FiX strokeWidth={3} size={15} color={"#FFF"} /></button>
+                  <div className="teamInfoDownload">
+                    <FiDownload size={20} color={"rgb(139,139,139)"} />
+                  </div>
+                </div>
+              )
+            })
+          ) : (<div>Ola</div>)}
         </div>
       </div>
     </main>

@@ -25,6 +25,29 @@ module.exports = {
     return res.json(team);
   },
 
+  async indexInfo(req, res){
+    let data = [];
+    const rawData = await Team.findAll({
+      attributes: { exclude: ['password'] },
+      include: [{ association: 'photos' }, { association: 'members'} ]
+    });
+
+    if(!rawData){
+      return res.status(400).json({ error: 'Não foi possível executar a requisição'})
+    }
+
+    for(let i=0; i < rawData.length; i++){
+      data.push({
+        "id": rawData[i]["id"],
+        "name": rawData[i]["name"],
+        "photos": rawData[i]["photos"].length,
+        "members": rawData[i]["members"].length
+      })
+    }
+
+    return res.json(data);
+  },
+
   async store(req, res){
     const { name, email, password } = req.body;
 
