@@ -1,5 +1,5 @@
-import React from 'react';
-import { FiX, FiUsers, FiImage, FiDownload } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FiX, FiUsers, FiImage, FiDownload, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { MdAddCircle, MdRemoveCircle } from 'react-icons/md';
 
 import Topbar from '../../components/Topbar/Topbar';
@@ -8,6 +8,10 @@ import './Dashboard.css';
 import api from '../../services/api';
 
 function Dashboard() {
+  const [dropDownFlag, setDropDownFlag] = useState(true);
+  function handleDropDown(){
+    dropDownFlag ? setDropDownFlag(false) : setDropDownFlag(true);
+  }
 
   return (
     <main>
@@ -18,7 +22,16 @@ function Dashboard() {
             
           </div>
           <div className="themeControlInfo">
-            <ul className="themeInfoList">
+            <span className="themeInfoTitle">Nome do tema</span>
+            <span className="themeInfoDropIcon" onClick={handleDropDown}>
+              {dropDownFlag ? (
+                <FiChevronUp size={24} color={"rgb(139,139,139)"} />
+              ) : (
+                <FiChevronDown size={24} color={"rgb(139,139,139)"} />
+              )}
+              
+            </span>
+            <ul className={`themeInfoList ${dropDownFlag ? 'dropDownOpen' : ''}`}>
               <li className="themeInfoItem">
                 <div className="themeInfoText">
                   <span>Subtema 1</span> <span>O som do silêncio</span>
@@ -75,10 +88,11 @@ function Dashboard() {
                   />
                 </div>
               </li>
+              <button className="addThemeBtn" onClick={() => { }}>
+                <MdAddCircle size={24} color='#58af9b' />
+              </button>
             </ul>
-            <button className="addThemeBtn" onClick={() => {}}>
-              <MdAddCircle size={24} color='#58af9b' />
-            </button>
+            
           </div>
         </div>
         <div className="teamInfoContainer">
