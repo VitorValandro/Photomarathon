@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FiX, FiUsers, FiImage, FiDownload, FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { MdAddCircle, MdRemoveCircle } from 'react-icons/md';
+import { FiX, FiUsers, FiImage, FiDownload } from 'react-icons/fi';
+import { MdAddCircle, MdRemoveCircle, MdCheckCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import Topbar from '../../components/Topbar/Topbar';
@@ -9,10 +9,12 @@ import './Dashboard.css';
 import api from '../../services/api';
 
 function Dashboard() {
-  const [dropDownFlag, setDropDownFlag] = useState(true);
   const [teamsInfo, setTeamsInfo] = useState([]);
   const [updateScreen, setUpdateScreen] = useState(0);
   const [themesInfo, setThemesInfo] = useState([]);
+  const [showAddSubtheme, setShowAddSubtheme] = useState(false);
+  const [subthemeName, setSubthemeName] = useState('');
+  const [subthemeValidationMsg, setSubthemeValidationMsg] = useState('');
 
   useEffect(() => {
     getTeamInfo();
@@ -67,8 +69,20 @@ function Dashboard() {
     }
   }
 
-  function handleDropDown(){
-    dropDownFlag ? setDropDownFlag(false) : setDropDownFlag(true);
+  async function handleSubthemeSubmit(event, themeId, subthemeNumber){
+    event.preventDefault();
+    await api.post(`/themes/${themeId}/subthemes`, {
+      "title": subthemeName,
+      "number": subthemeNumber
+    })
+      .then((response) => {
+        setSubthemeValidationMsg('Subtema cadastrado com sucesso!');
+        setUpdateScreen(subthemeNumber);
+      })
+      .catch(err => {
+        console.log(err);
+        setSubthemeValidationMsg('Um erro ocorreu ao cadastrar o subtema.')
+      })
   }
 
   return (
@@ -76,6 +90,7 @@ function Dashboard() {
       <Topbar />
       <div className="dashboardContainer">
         <div className="themeControlContainer">
+          <span className="separatorTitle">Temas</span>
           <div className="themeControlForm">
             
           </div>
@@ -84,14 +99,7 @@ function Dashboard() {
               return(
                 <div key={themeInfo.id} className="themeControlInfo">
                   <span className="themeInfoTitle">{themeInfo.title}</span>
-                  <span className="themeInfoDropIcon" onClick={handleDropDown}>
-                    {dropDownFlag ? (
-                      <FiChevronUp size={24} color={"rgb(139,139,139)"} />
-                    ) : (
-                      <FiChevronDown size={24} color={"rgb(139,139,139)"} />
-                    )}
-                  </span>
-                  <ul className={`themeInfoList ${dropDownFlag ? 'dropDownOpen' : ''}`}>
+                  <ul className={'themeInfoList dropDownOpen'}>
                     {themeInfo.subthemes.length !== 0 ? (
                       themeInfo.subthemes.map((subtheme, index) => {
                         return (
@@ -115,9 +123,32 @@ function Dashboard() {
                     ) : (
                       <div>Não há subtemas ainda</div>
                     )}
-                    <button className="addThemeBtn" onClick={() => { }}>
-                      <MdAddCircle size={24} color='#58af9b' />
-                    </button>
+                    {themeInfo.subthemes.length < 4 && !showAddSubtheme ? (
+                      <button className="addThemeBtn" onClick={() => { setShowAddSubtheme(true) }}>
+                        <MdAddCircle size={24} color='#58af9b' />
+                      </button>
+                    ) : (
+                      <div></div>
+                    )}
+                    {showAddSubtheme ? (
+                      <form className="addSubthemeForm" onSubmit={(e) => {handleSubthemeSubmit(e, themeInfo.id, themeInfo.subthemes.length + 1)}}>
+                        <span>Adicione um novo subtema</span>
+                        <div>
+                          <input
+                            value={subthemeName}
+                            type="text"
+                            placeholder="Nome do subtema..."
+                            onChange={e => { setSubthemeName(e.target.value) }}
+                            required
+                          >
+                          </input>
+                          <button type="submit" className="addSubthemeBtn">
+                            <MdCheckCircle size={26} color={'#78e5d5'}/>
+                          </button>
+                        </div>
+                        <span style={{color: 'orange'}}>{subthemeValidationMsg}</span>
+                      </form>
+                    ): (<div></div>)}
                   </ul>
                 </div>
               )
@@ -128,6 +159,7 @@ function Dashboard() {
           )}
         </div>
         <div className="teamInfoControlContainer">
+          <span className="separatorTitle">Times</span>
           {teamsInfo.length !== 0 ? (
             teamsInfo.map(teamInfo => {
               return(
