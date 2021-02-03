@@ -12,10 +12,6 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-#root{
-  height:max-content;
-}
-
 .dashboardContainer{
   display: flex;
   justify-content: space-between;
@@ -26,7 +22,7 @@ body {
   height: auto;
 }
 
-.teamInfoContainer{
+.teamInfoControlContainer{
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -37,7 +33,7 @@ body {
   height: auto;
 }
 
-.teamInfoBlock{
+.teamInfoControlBlock{
   margin: 20px 0 20px 0;
   width: 100%;
   background-color: white;
@@ -46,14 +42,18 @@ body {
   position: relative;
 }
 
-.teamInfoBlock div {
+.teamInfoControlBlock:last-child{
+  margin-bottom: 100px;
+}
+
+.teamInfoControlBlock div {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.teamInfoTitle{
+.teamInfoControlTitle{
   font-family: 'Open Sans', 'sans-serif';
   font-weight: bold;
   font-size: 15px;
@@ -61,7 +61,7 @@ body {
   margin-left: 10px;
 }
 
-.teamInfoStats{
+.teamInfoControlStats{
   list-style-type: none;
   display: flex;
   justify-content: space-between;
@@ -70,17 +70,17 @@ body {
   width: 50%;
 }
 
-.teamInfoStats li{
+.teamInfoControlStats li{
   color:rgb(139, 139, 139);
 }
 
-.teamInfoStats li span {
+.teamInfoControlStats li span {
   margin-left: 5px;
   font-size: 22px;
   font-weight: lighter;
 }
 
-.teamInfoDelete{
+.teamInfoControlDelete{
   position: absolute;
   top: 0;
   right: 0;
@@ -94,7 +94,7 @@ body {
   cursor: pointer;
 }
 
-.teamInfoDownload{
+.teamInfoControlDownload{
   margin-top:20px;
   padding:10px;
   border: 2px dashed #58af9b;
