@@ -4,6 +4,7 @@ import { MdAddCircle, MdRemoveCircle, MdCheckCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import Topbar from '../../components/Topbar/Topbar';
+import zipPhotosDownload from '../../services/downloads';
 
 import './Dashboard.css';
 import api from '../../services/api';
@@ -85,6 +86,23 @@ function Dashboard() {
       })
   }
 
+  async function getFilenamesToDownload(teamId=0, subthemeId=0, zipname){
+    let photosArray = []; // array que contém todas as fotos
+    let filenamesArray = [];
+    const url = teamId ? `/photos/teams/${teamId}` : `/photos/subthemes/${subthemeId}`;
+    
+    await api.get(url)
+      .then((response) => {
+        photosArray = response.data;
+      })
+      .catch(err => console.log(err))
+    photosArray.forEach((photo) => {
+      filenamesArray.push(photo.filename);
+    });
+    zipPhotosDownload(filenamesArray, zipname);
+    return;
+  }
+
   return (
     <main>
       <Topbar />
@@ -108,7 +126,12 @@ function Dashboard() {
                               <span>Subtema {index+1}</span> <span>{subtheme.title}</span>
                             </div>
                             <div className="themeInfoButtons">
-                              <FiDownload size={24} color={"rgb(139,139,139)"} />
+                              <FiDownload 
+                                onClick={()=>{getFilenamesToDownload(0, subtheme.id, `FOTOS_DO_SUBTEMA-${subtheme.title}`)}}
+                                size={24} 
+                                color={"rgb(139,139,139)"}
+                                style={{cursor: 'pointer'}}
+                              />
                               <MdRemoveCircle
                                 onClick={() => { deleteSubtheme(subtheme.id); }}
                                 size={24}
@@ -176,8 +199,13 @@ function Dashboard() {
                   <button className="teamInfoControlDelete" onClick={() => {deleteTeam(teamInfo.id)}}>
                     <FiX strokeWidth={3} size={15} color={"#FFF"} />
                   </button>
-                  <div className="teamInfoControlDownload">
-                    <FiDownload size={20} color={"rgb(139,139,139)"} />
+                  <div className="teamInfoControlDownload" onClick={() => {
+                    getFilenamesToDownload(teamInfo.id, 0, `FOTOS_DO_TIME-${teamInfo.name}`)
+                  }}>
+                    <FiDownload 
+                      size={20} 
+                      color={"rgb(139,139,139)"} 
+                    />
                   </div>
                 </div>
               )
