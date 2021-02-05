@@ -1,4 +1,7 @@
+const path = require('path');
+
 const uploadPhotoMiddleware = require('../config/uploadConfig');
+const putWatermarkToPhoto = require('../middlewares/watermark');
 
 const Photo = require('../models/Photo');
 const Team = require('../models/Team');
@@ -47,7 +50,22 @@ module.exports = {
     const { subthemeId } = req.body;
     const { filename } = req.file;
 
-    const photo = await Photo.create({
+    /* 
+    Aqui é feita a edição da foto pra colocar a marca d'água.
+    Como o arquivo não pode ser editado sem estar armazenado em algum lugar,
+    primeiro ele é salvo da forma original. Depois, a função putWatermarkToPhoto
+    edita a imagem pra colocar a watermark e sobreescreve o registro da foto original.
+    Nenhuma mudança é feita na DB, só na pasta uploads. O nome do arquivo jamais deve mudar entre
+    original e editado, senão ele não irá sobreescrever corretamente.
+    */
+
+    const subtheme = await Subtheme.findByPk(subthemeId);
+
+    const pathOfOriginalFile = path.join(__dirname, '..', '..', 'uploads', filename);
+    const watermark = path.join(__dirname, '..', 'watermarks', `subtheme-${subtheme.number}.png`);
+    putWatermarkToPhoto(pathOfOriginalFile, watermark, filename);
+
+    const photo = await Photo.create({ // Armazena no banco de dados
       teamId,
       subthemeId,
       filename,
