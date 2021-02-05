@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
 import { isAuthenticated, logout, getTeamThatIsAuthenticated } from "../../services/auth";
+
+import '../../global/global.css';
 import "./Topbar.css";
 
 function Topbar({ goBackArrow=true }) {

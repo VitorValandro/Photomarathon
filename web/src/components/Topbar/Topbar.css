@@ -30,7 +30,7 @@ body {
 }
 
 .nav-btn {
-  color: #58af9b;
+  color: var(--neutralGreen);
   font-size: 15px;
   padding: 10px 50px;
   cursor: pointer;

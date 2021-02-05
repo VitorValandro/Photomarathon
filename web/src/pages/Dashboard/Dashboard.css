@@ -18,7 +18,7 @@ body {
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  background-color: #ecf0f1;
+  background-color: var(--lightGray);
   height: auto;
 }
 
@@ -56,7 +56,7 @@ body {
   font-family: 'Open Sans', 'sans-serif';
   font-weight: bold;
   font-size: 15px;
-  color:#58af9b;
+  color:var(--neutralGreen);
   margin-left: 10px;
 }
 
@@ -70,7 +70,7 @@ body {
 }
 
 .teamInfoControlStats li{
-  color:rgb(139, 139, 139);
+  color:var(--neutralGray);
 }
 
 .teamInfoControlStats li span {
@@ -88,7 +88,7 @@ body {
   padding: 8px;
   border: 0;
   color: white;
-  background-color: #e57878;
+  background-color: var(--alertRed);
   text-align: center;
   cursor: pointer;
 }
@@ -96,7 +96,7 @@ body {
 .teamInfoControlDownload{
   margin-top:20px;
   padding:10px;
-  border: 2px dashed #58af9b;
+  border: 2px dashed var(--neutralGreen);
   border-style: dashed none none none;
   border-top-left-radius: 100px;
   border-top-right-radius: 100px;
@@ -150,12 +150,12 @@ body {
   flex-direction: row;
   margin-bottom: 10px;
   padding: 7.5px;
-  border: 1px solid #58af9b;
+  border: 1px solid var(--neutralGreen);
   border-radius: 10px;
 }
 
 .themeInfoItem .themeInfoText span:first-of-type{
-  color: #58af9b;
+  color: var(--neutralGreen);
   font-weight: bold;
   font-size: 15px;
   border-right: 2px solid;
@@ -163,7 +163,7 @@ body {
 }
 
 .themeInfoItem .themeInfoText span:nth-child(2){
-  color:rgb(139, 139, 139);
+  color:var(--neutralGray);
   margin-left: 10px;
 }
 
@@ -174,7 +174,7 @@ body {
   margin-top:20px;
   background: 0;
   padding:10px;
-  border: 2px dashed #58af9b;
+  border: 2px dashed var(--neutralGreen);
   border-style: dashed none none none;
   border-top-left-radius: 100px;
   border-top-right-radius: 100px;
@@ -184,7 +184,7 @@ body {
 .themeInfoTitle{
   font-weight: bold;
   font-size: 15px;
-  color:#58af9b;
+  color:var(--neutralGreen);
   text-align: center;
   display:flex;
   justify-content: center;
@@ -199,15 +199,15 @@ body {
 }
 
 .separatorTitle{
-  color: #58af9b;
+  color: var(--neutralGreen);
   font-size: 15px;
   font-weight: bold;
   margin: 20px 0;
   width: 60%;
   text-align: center;
   padding: 5px;
-  border-bottom: 4px double #58af9b;
-  border-top: 4px double #58af9b;
+  border-bottom: 4px double var(--neutralGreen);
+  border-top: 4px double var(--neutralGreen);
   text-transform: uppercase;
 }
 
@@ -221,7 +221,7 @@ body {
 
 .addSubthemeForm span{
   margin: 10px;
-  color: rgb(139, 139, 139);
+  color: var(--neutralGray);
 }
 
 .addSubthemeForm div{
@@ -234,7 +234,7 @@ body {
 .addSubthemeForm div input{
   width: 60%;
   padding: 5px;
-  border: 1px solid rgb(139, 139, 139);
+  border: 1px solid var(--neutralGray);
   font-family: 'Open Sansa', sans-serif;
   border-radius: 15px;
   text-align: center;

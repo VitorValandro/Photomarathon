@@ -8,6 +8,7 @@ import 'react-circular-progressbar/dist/styles.css'
 import { MdCheckCircle, MdError } from 'react-icons/md';
 import { FiUpload } from 'react-icons/fi';
 
+import '../../global/global.css';
 import "./PhotoUpload.css";
 
 import api from '../../services/api';

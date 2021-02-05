@@ -19,7 +19,7 @@ body {
   align-items: center;
   width: 100vw;
   height: auto;
-  background-color: #ecf0f1;
+  background-color: var(--lightGray);
 }
 
 .rollScreenContainer{

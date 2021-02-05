@@ -18,10 +18,10 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color: #ecf0f1;
+    background-color: var(--lightGray);
 }
 .content {
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 15px;
     width: 960px;
     height: 75%;
@@ -32,7 +32,7 @@ body {
 .content::before {
     content: "";
     position: absolute;
-    background-color: #58af9b;
+    background-color: var(--neutralGreen);
     width: 40%;
     height: 100%;
     border-top-left-radius: 15px;
@@ -46,10 +46,10 @@ body {
     word-wrap: break-word;
 }
 .title-primary {
-    color: #fff;
+    color: var(--white);
 }
 .title-second {
-    color: #58af9b;
+    color: var(--neutralGreen);
 }
 .description {
     font-size: 15px;
@@ -57,14 +57,14 @@ body {
     line-height: 30px;
 }
 .description-primary {
-    color: #fff;
+    color: var(--white);
 }
 .description-second {
     color: #7f8c8d;
 }
 .btn {
     border-radius: 15px;
-    color: #fff;
+    color: var(--white);
     font-size: 15px;
     padding: 10px 50px;
     cursor: pointer;
@@ -72,14 +72,14 @@ body {
     align-self: center;
     border: none;
     margin-top: 1rem;
-    border: 1px solid #fff;
-    background-color: #58af9b;
+    border: 1px solid var(--white);
+    background-color: var(--neutralGreen);
     transition: background-color .5s;
 }
 .btn:hover {
-    background-color: #fff;
-    border: 1px solid #58af9b;
-    color: #58af9b;
+    background-color: var(--white);
+    border: 1px solid var(--neutralGreen);
+    color: var(--neutralGreen);
 }
 .first-content {
     display: flex;
@@ -107,16 +107,16 @@ body {
     height: 45px;
     width: 100%;
     border: none;
-    background-color: #ecf0f1;
+    background-color: var(--lightGray);
 }
 input:-webkit-autofill 
 { 
-  box-shadow: 0 0 0px 1000px #ecf0f1 inset !important;
-  -webkit-box-shadow: 0 0 0px 1000px #ecf0f1 inset !important;
+  box-shadow: 0 0 0px 1000px var(--lightGray) inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--lightGray) inset !important;
   -webkit-text-fill-color: #000 !important;
 }
 .label-input {
-    background-color: #ecf0f1;
+    background-color: var(--lightGray);
     display: flex;
     align-items: center;
     margin: 8px;
@@ -205,7 +205,7 @@ input:-webkit-autofill
 
 .validationMsgSpan{
     margin: 5px;
-    color: orange;
+    color: var(--alertOrange);
     text-align: center;
     word-wrap: break-word;
 }

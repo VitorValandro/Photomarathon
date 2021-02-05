@@ -7,7 +7,9 @@ import PhotoUpload from '../../components/PhotoUpload/PhotoUpload';
 import { FiUser, FiPlus, FiArrowRight } from 'react-icons/fi';
 import { MdRemoveCircle } from 'react-icons/md';
 
+import '../../global/global.css';
 import './Team.css';
+
 import api from '../../services/api';
 import { getTeamThatIsAuthenticated, isAuthenticated } from "../../services/auth";
 import { useParams } from 'react-router-dom';

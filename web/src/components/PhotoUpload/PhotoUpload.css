@@ -24,11 +24,11 @@
 }
 
 .dragActive{
-  border-color: #78e5d5;
+  border-color: var(--lightGreen);
 }
 
 .dragReject{
-  border-color: #e57878;
+  border-color: var(--alertRed);
 }
 
 .uploadMessage{
@@ -40,10 +40,10 @@
 }
 
 .uploadError{
-  color:#e57878;
+  color:var(--alertRed);
 }
 .uploadSuccess{
-  color:#78e5d5;
+  color:var(--lightGreen);
 }
 
 .fileContainer{
@@ -89,7 +89,7 @@
 .fileInfo div span button{
   border: 0;
   background: transparent;
-  color:#e57878;
+  color:var(--alertRed);
   margin-left: 5px;
   cursor: pointer;
 }
@@ -111,7 +111,7 @@
 }
 
 .statusMessage{
-  color: #78e5d5;
+  color: var(--lightGreen);
   font-weight: bold;
 }
 

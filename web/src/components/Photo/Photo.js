@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 
+import '../../global/global.css';
 import './Photo.css';
 import api from '../../services/api';
 import { Link } from 'react-router-dom';

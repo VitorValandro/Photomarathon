@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import '../../global/global.css';
 import "./AuthScreen.css";
 
 import { FiUsers, FiMail, FiLock } from "react-icons/fi";

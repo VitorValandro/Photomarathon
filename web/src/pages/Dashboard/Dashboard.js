@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Topbar from '../../components/Topbar/Topbar';
 import zipPhotosDownload from '../../services/downloads';
 
+import '../../global/global.css';
 import './Dashboard.css';
 import api from '../../services/api';
 
