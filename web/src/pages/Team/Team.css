@@ -13,18 +13,16 @@ body {
 
 .teamContent{
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
+  justify-content:space-between;
   width: 100vw;
   height: auto;
   background-color: var(--lightGray);
-  
 }
 
 .teamInfoContainer{
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   width: 30%;
   height: auto;
   max-height: 90vh;
@@ -89,7 +87,7 @@ body {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 80%;
+  width: 70%;
   height: auto;
 }
 
@@ -157,4 +155,28 @@ body {
 .validationMessage{
   color:var(--alertOrange);
   font-weight: normal;
+}
+
+@media screen and (max-width: 1040px){
+  .teamContent{
+    flex-direction: column;
+  }
+  .teamInfoContainer{
+    width: 100vw;
+    position: static;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .infoContainer{
+    width: 80%;
+    margin: 50px 0 10px 0;
+  }
+  .btnDiv{
+    width: 80%;
+  }
+  .teamPhotosContainer{
+    width: 80%;
+    align-items: center;
+  }
 }

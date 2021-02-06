@@ -31,3 +31,9 @@ body {
   max-width: 55vw;
   height: auto;
 }
+
+@media screen and (max-width: 1040px){
+  .rollScreenContainer{
+    max-width: 80vw;
+  }
+}

@@ -100,7 +100,7 @@ function Team() {
 
   return (
     <main>
-      <Topbar goBackArrow={true} />
+      <Topbar page={'Team'} />
       <div className="teamContent">
         <div className="teamInfoContainer">
           <div className="infoContainer">
@@ -181,7 +181,7 @@ function Team() {
             ) : (<span></span>)
           }
         </div>
-        <div style={{alignItems: 'center'}}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <div className="teamPhotosContainer">
             {(isAuthenticated() && teamId === getTeamThatIsAuthenticated()) ? (
               <PhotoUpload />

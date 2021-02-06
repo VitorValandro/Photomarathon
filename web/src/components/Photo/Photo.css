@@ -5,8 +5,8 @@
   width: 100%;
   border-radius: 15px;
   background-color: #fff;
-  border:1px solid var(--neutralGreen);
-  padding: 5px;
+  /*border:1px solid var(--neutralGreen);*/
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -95,4 +95,10 @@
   text-align: center;
   width: 300px;
   color: #ececec;
+}
+
+@media screen and (max-width: 1040px){
+  .modalImg{
+    max-width: 90vw;
+  }
 }
