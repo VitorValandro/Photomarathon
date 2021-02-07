@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Dropzone from 'react-dropzone';
 import filesize from 'filesize';
+import Skeleton, {SkeletonTheme} from 'react-loading-skeleton';
 
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css'
@@ -18,6 +19,7 @@ function PhotoUpload() {
   const [uploadedFile, setUploadedFile] = useState('');
   const [options, setOptions] = useState([]);
   const [subtheme, setSubtheme] = useState(0);
+  const [photoUploadIsLoading, setPhotoUploadIsLoading] = useState(true);
 
   useEffect(() => {
     loadSubthemes(2)
@@ -29,6 +31,7 @@ function PhotoUpload() {
     await api.get(`/themes/${themeId}/subthemes`)
       .then((response) => {
         data = response.data;
+        setPhotoUploadIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -96,69 +99,76 @@ function PhotoUpload() {
   };
 
   return (
-    
-      <div className="uploadContainer">
-        <Dropzone accept="image/*" onDropAccepted={handleUpload} multiple={false}>
-          { ({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
-            <div
-              { ...getRootProps() }
-              className={`dropzone ${isDragReject ? 'dragReject' : ''} ${isDragActive ? 'dragActive' : ''}`}
-            >
-              <input { ...getInputProps() }/>
-              {renderDragMessage(isDragActive, isDragReject)}
-            </div>
-          ) }
-        </Dropzone>
-        <select className={'themeSelect'} defaultValue={0}onChange={(e) => {setSubtheme(e.target.value); console.log(subtheme)}}>
-          <option value={0} disabled>Selecione o subtema</option>
-          {options.map(option => {
-            return (
-              <option className={'selectOption'} key={option.value} value={option.value}>{option.label}</option>
-          )}) }
-        </select>
-        { !!uploadedFile.name && (
-          <div className="fileContainer">
-            <li>
-              <div className="fileInfo">
-                <div className="filePreview" style={{ backgroundImage: `url(${uploadedFile.preview})` }} />
-                <div>
-                  <strong>{uploadedFile.name}</strong>
-                  <span>{uploadedFile.readableSize}
-                  {!uploadedFile.uploaded && (
-                    <button onClick={() => { setUploadedFile({}) }}>Excluir</button>
-                  )}
-                  </span>
+    <div className="uploadContainer">
+      {photoUploadIsLoading ? (
+        <SkeletonTheme color="#ececec" highlightColor="#ecf0f1">
+          <Skeleton height={100} />
+        </SkeletonTheme>
+      ) : (
+        <>
+          <Dropzone accept="image/*" onDropAccepted={handleUpload} multiple={false}>
+            { ({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
+              <div
+                { ...getRootProps() }
+                className={`dropzone ${isDragReject ? 'dragReject' : ''} ${isDragActive ? 'dragActive' : ''}`}
+              >
+                <input { ...getInputProps() }/>
+                {renderDragMessage(isDragActive, isDragReject)}
+              </div>
+            ) }
+          </Dropzone>
+          <select className={'themeSelect'} defaultValue={0}onChange={(e) => {setSubtheme(e.target.value); console.log(subtheme)}}>
+            <option value={0} disabled>Selecione o subtema</option>
+            {options.map(option => {
+              return (
+                <option className={'selectOption'} key={option.value} value={option.value}>{option.label}</option>
+            )}) }
+          </select>
+          {!!uploadedFile.name && (
+            <div className="fileContainer">
+              <li>
+                <div className="fileInfo">
+                  <div className="filePreview" style={{ backgroundImage: `url(${uploadedFile.preview})` }} />
+                  <div>
+                    <strong>{uploadedFile.name}</strong>
+                    <span>{uploadedFile.readableSize}
+                      {!uploadedFile.uploaded && (
+                        <button onClick={() => { setUploadedFile({}) }}>Excluir</button>
+                      )}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div>
-                {!uploadedFile.uploaded && !uploadedFile.error && (
-                  <CircularProgressbar
-                    styles={{
-                      root: { width: 24 },
-                      path: { stroke: '#7159c1' }
-                    }}
-                    strokeWidth={10}
-                    value={uploadedFile.progress}
-                  />
+                <div>
+                  {!uploadedFile.uploaded && !uploadedFile.error && (
+                    <CircularProgressbar
+                      styles={{
+                        root: { width: 24 },
+                        path: { stroke: '#7159c1' }
+                      }}
+                      strokeWidth={10}
+                      value={uploadedFile.progress}
+                    />
+                  )}
+                  {uploadedFile.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
+                  {uploadedFile.error && <MdError size={24} color="#e57878" />}
+
+                </div>
+              </li>
+              <div className="bottomDiv">
+                {!uploadedFile.uploaded && subtheme !== 0 && (
+                  <button className="uploadButton" onClick={() => { processUpload(uploadedFile, subtheme); }}>
+                    <FiUpload size={24} color={"#999"} />
+                  </button>
                 )}
-                { uploadedFile.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
-                { uploadedFile.error && <MdError size={24} color="#e57878" /> }
-                
+                {uploadedFile.uploaded && (
+                  <span className="statusMessage">Arquivo enviado com sucesso!</span>
+                )}
               </div>
-            </li>
-            <div className="bottomDiv">
-              {!uploadedFile.uploaded && subtheme !== 0 &&(
-                <button className="uploadButton" onClick={() => { processUpload(uploadedFile, subtheme); }}>
-                  <FiUpload size={24} color={"#999"}/>
-                </button>
-              )}
-              {uploadedFile.uploaded &&(
-                <span className="statusMessage">Arquivo enviado com sucesso!</span>
-              )}
             </div>
-          </div>
-        ) }
-      </div>
+          )}
+        </>
+      )}
+    </div>
   );
 }
 

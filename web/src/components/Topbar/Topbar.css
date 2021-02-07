@@ -66,6 +66,7 @@ body {
     background-color: rgb(238, 247, 235);
     transform: rotatex(180deg);
     justify-content: space-between;
+    z-index: 10;
   }
   .bottomBarCenterItem{
     transform: rotatex(180deg);

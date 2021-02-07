@@ -6,6 +6,7 @@ import PhotoUpload from '../../components/PhotoUpload/PhotoUpload';
 
 import { FiUser, FiPlus, FiArrowRight } from 'react-icons/fi';
 import { MdRemoveCircle } from 'react-icons/md';
+import Skeleton, {SkeletonTheme} from 'react-loading-skeleton';
 
 import '../../global/global.css';
 import './Team.css';
@@ -22,6 +23,7 @@ function Team() {
   const [membersArray, setMembersArray] = useState([]);
   const [photosArray, setPhotosArray] = useState([]);
   const [teamInfo, setTeamInfo] = useState({});
+  const [memberListIsLoading, setMemberListIsLoading] = useState(true);
 
   const { teamId } = useParams();
 
@@ -39,6 +41,7 @@ function Team() {
     await api.get(`/teams/${teamId}/members`)
       .then((response) => {
         setMembersArray(response.data);
+        setMemberListIsLoading(false);
       })
       .catch(err => console.log(err));
   }
@@ -102,62 +105,72 @@ function Team() {
     <main>
       <Topbar page={'Team'} />
       <div className="teamContent">
-        <div className="teamInfoContainer">
-          <div className="infoContainer">
-            <span className="teamName">{teamInfo.name}</span>
-            <span className="memberPresentation">Membros</span>
-            <ul className="teamMembers">
-              {membersArray.length !== 0 ? (
-                membersArray.map(member => {
-                  return(
-                    <li key={member.id} className="memberInfo">
-                      <div>
-                        <FiUser size={24} color='#58af9b' />
-                        <span className="memberName">{member.name}</span>
-                      </div>
-                      <div>
-                        <span className="memberRegister">{member.registration}</span>
-                        {(isAuthenticated() && teamId === getTeamThatIsAuthenticated()) ? (
-                          <MdRemoveCircle 
-                            onClick={() => {handleMemberDelete(member)}} 
-                            size={24} 
-                            color="#e57878" 
-                            style={{marginLeft:'5px', cursor:'pointer'}}
-                          />
-                        ): (<span></span>)}
-                      </div>
-                    </li>   
-                  );
-                })
-              ) : (
-                <li className="memberPresentation memberInfo">
-                  Esse time ainda não tem membros
-                </li>
-              )}
-            </ul>
+        <div className = "teamInfoContainer">
+          <div className = "infoContainer">
+            {memberListIsLoading ? (
+            <SkeletonTheme color = "#ececec" highlightColor = "#ecf0f1" >
+              <Skeleton width={"50%"} height={20}/>
+              <Skeleton width={"75%"} height={15}/>
+              <Skeleton width={"100%"} height={80}/>
+            </SkeletonTheme>
+            ) : (
+            <>
+              <span className = "teamName">{teamInfo.name}</span>
+              <span className="memberPresentation">Membros</span>
+              <ul className="teamMembers">
+                {membersArray.length !== 0 ? (
+                  membersArray.map(member => {
+                    return (
+                      <li key={member.id} className="memberInfo">
+                        <div>
+                          <FiUser size={24} color='#58af9b' />
+                          <span className="memberName">{member.name}</span>
+                        </div>
+                        <div>
+                          <span className="memberRegister">{member.registration}</span>
+                          {(isAuthenticated() && teamId === getTeamThatIsAuthenticated()) ? (
+                            <MdRemoveCircle
+                              onClick={() => { handleMemberDelete(member) }}
+                              size={24}
+                              color="#e57878"
+                              style={{ marginLeft: '5px', cursor: 'pointer' }}
+                            />
+                          ) : (<span></span>)}
+                        </div>
+                      </li>
+                    );
+                  })
+                ) : (
+                    <li className="memberPresentation memberInfo">
+                      Esse time ainda não tem membros
+                    </li>
+                  )}
+              </ul>
+            </>
+            )}
           </div>
           {(isAuthenticated() && teamId === getTeamThatIsAuthenticated()) ? (
             <div className="btnDiv">
               {!showAddMember ? (
-                <button className="addMemberBtn" onClick={() => {setShowAddMember(true)}}><FiPlus size={24} color='#58af9b' /></button>
+                <button className="addMemberBtn" onClick={() => { setShowAddMember(true) }}><FiPlus size={24} color='#58af9b' /></button>
               ) : (
                 <form onSubmit={handleMemberSubmit} className="addMemberForm">
                   <span>Insira os dados para inscrever um novo membro</span>
                   <fieldset>
                     <div className="addMemberInputBlock">
                       <label htmlFor="name">Nome</label>
-                      <input 
+                      <input
                         value={memberName}
                         type="text"
-                        onChange={e => {setMemberName(e.target.value)}}
+                        onChange={e => { setMemberName(e.target.value) }}
                         required
                       />
                     </div>
                     <div className="addMemberInputBlock">
                       <label htmlFor="registration">Matrícula</label>
-                      <input 
-                        value={memberRegister} 
-                        onChange={e => { setMemberRegister(e.target.value) }} 
+                      <input
+                        value={memberRegister}
+                        onChange={e => { setMemberRegister(e.target.value) }}
                         minLength="10"
                         maxLength="10"
                         required
@@ -165,21 +178,18 @@ function Team() {
                     </div>
                   </fieldset>
                   {validationMsg !== '' ? (
-                      <div className="validationContainer">
-                        <p className="validationMessage">{validationMsg}</p>
-                      </div>
-                  ) : (
-                    <span></span>
-                  )
+                    <div className="validationContainer">
+                      <p className="validationMessage">{validationMsg}</p>
+                    </div>
+                  ) : (null)
                   }
-                  <button type="submit" className="addMemberBtn" style={{border:'2px dashed #ececec', marginTop:'10px'}}>
-                      <FiArrowRight size={24} color='#58af9b'/>
+                  <button type="submit" className="addMemberBtn" style={{ border: '2px dashed #ececec', marginTop: '10px' }}>
+                    <FiArrowRight size={24} color='#58af9b' />
                   </button>
                 </form>
-              )}   
+              )}
             </div>
-            ) : (<span></span>)
-          }
+          ) : (null)}
         </div>
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <div className="teamPhotosContainer">

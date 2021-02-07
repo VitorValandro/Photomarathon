@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FiX } from 'react-icons/fi';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import '../../global/global.css';
 import './Photo.css';
@@ -12,15 +13,18 @@ function Photo({photo}){
   const [modal, setModal] = useState('none');
   const [subthemeName, setSubthemeName] = useState('');
   const [teamName, setTeamName] = useState('');
+  const [photoInfoIsLoading, setPhotoInfoIsLoading] = useState(true);
 
   useEffect(() => {
     getPhotoAssociationsInfo();
   }, []);
 
   async function getPhotoAssociationsInfo(){
+    let infoLoaded = 0;
     await api.get(`/themes/subthemes`)
       .then((response) => {
         const subthemeObject = response.data.filter((subtheme) => {
+          infoLoaded++;
           return subtheme.id === photo.subthemeId;
         });
         setSubthemeName(subthemeObject[0].title);
@@ -30,12 +34,13 @@ function Photo({photo}){
     await api.get(`/teams`)
       .then((response) => {
         const teamObject = response.data.filter((team) => {
+          infoLoaded++;
           return team.id === photo.teamId;
         });
         setTeamName(teamObject[0].name);
       })
       .catch(err => console.log(err));
-
+    infoLoaded >= 2 && setPhotoInfoIsLoading(false);
     return;
   }
 
@@ -52,7 +57,16 @@ function Photo({photo}){
   }
 
   return(
+    <>
       <div className="photoContainer">
+      {photoInfoIsLoading ? (
+        <SkeletonTheme color="]#ececec" highlightColor="#ecf0f1">
+          <Skeleton width={"30%"}/>
+          <Skeleton width={"100%"}/>
+          <Skeleton height={375}/>
+        </SkeletonTheme>
+      ) : (
+        <>
         <div className="photoHeader">
           <Link to={`/team/${photo.teamId}`} className="teamLink">
             <span>{teamName}</span>
@@ -61,7 +75,7 @@ function Photo({photo}){
             <span className="postHour">{convertTimestampToDate(photo.createdAt)}</span>
             <span className="themeName">{subthemeName}</span>
           </div>
-        </div>
+        </div >
         <img alt="Fotografia do time" className="photoImg" src={`${apiUrl}/uploadedPhotos/${photo.filename}`} onClick={handleModal}></img>
         <div className="photoModal" style={{display:modal}}>
           <FiX size={40} color={"#FFF"} className="closeModal" onClick={handleModal}/>
@@ -76,7 +90,10 @@ function Photo({photo}){
           <img alt="Fotografia do time" className="modalImg" src={`${apiUrl}/uploadedPhotos/${photo.filename}`}></img>
           <span className="modalPostHour">{convertTimestampToDate(photo.createdAt)}</span>
         </div>
-      </div>
+        </>
+      )}
+      </div >
+    </>
   );
 }
 
