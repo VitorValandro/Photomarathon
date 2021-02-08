@@ -13,8 +13,7 @@ body {
 .topbar-container{
   position: relative;
   top: 0;
-  width: 90vw;
-  margin-left: 5vw;
+  width: 100vw;
   height: 80px;
   display: flex;
   align-items: center;

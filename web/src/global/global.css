@@ -7,3 +7,9 @@
   --white: white;
   --lightGray: #ecf0f1;
 }
+
+.nullAlert{
+  color: orange;
+  font-size: 15px;
+  font-weight: bold;
+}

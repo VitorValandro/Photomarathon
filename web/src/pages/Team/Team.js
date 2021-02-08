@@ -142,7 +142,7 @@ function Team() {
                   })
                 ) : (
                     <li className="memberPresentation memberInfo">
-                      Esse time ainda não tem membros
+                      <div className="nullAlert">Ainda não há membros inscritos nesse time</div>
                     </li>
                   )}
               </ul>
@@ -191,17 +191,20 @@ function Team() {
             </div>
           ) : (null)}
         </div>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth:'80%'}}>
           <div className="teamPhotosContainer">
             {(isAuthenticated() && teamId === getTeamThatIsAuthenticated()) ? (
               <PhotoUpload />
               ): (<span></span>)
             }
-            {photosArray.map((photo => {
+            {photosArray.length !== 0 ? (
+              photosArray.map(photo => {
               return (
                 <Photo key={photo.id} photo={photo} />
               )
-            }))}
+              })
+            ) : (<div className="nullAlert">Esse grupo ainda não tem fotos</div>)
+            }
           </div>
         </div>
       </div>

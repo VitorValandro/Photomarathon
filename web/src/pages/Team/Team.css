@@ -9,6 +9,7 @@ body {
   padding: 0;
   display: flex;
   font-family: 'Open Sans', sans-serif;
+  background-color: var(--lightGray);
 }
 
 .teamContent{
@@ -89,6 +90,7 @@ body {
   flex-direction: column;
   width: 70%;
   height: auto;
+  text-align: center;
 }
 
 .btnDiv{

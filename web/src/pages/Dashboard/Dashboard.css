@@ -14,12 +14,13 @@ body {
 
 .dashboardContainer{
   display: flex;
-  justify-content: space-between;
+  justify-content:safe;
   flex-direction: column;
   align-items: center;
   width: 100vw;
   background-color: var(--lightGray);
   height: auto;
+  min-height: 100vh;
 }
 
 .teamInfoControlContainer{

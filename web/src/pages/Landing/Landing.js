@@ -33,11 +33,14 @@ function Landing() {
             ) : (<span></span>)
             }
           </main>
-          {photosArray.map((photo => {
-            return(
-              <Photo key={photo.id} photo={photo}/>
-            )
-          }))}
+          {photosArray.length !== 0 ? (
+            photosArray.map(photo => {
+              return (
+                <Photo key={photo.id} photo={photo} />
+              )
+            })
+          ) : (<div className="nullAlert">Ainda não há fotos para mostrar</div>)
+          }
         </div>
       </div>
     </main>

@@ -145,7 +145,7 @@ function Dashboard() {
                       })
                       
                     ) : (
-                      <div>Não há subtemas ainda</div>
+                        <div></div>
                     )}
                     {themeInfo.subthemes.length < 4 && !showAddSubtheme ? (
                       <button className="addThemeBtn" onClick={() => { setShowAddSubtheme(true) }}>
@@ -179,7 +179,7 @@ function Dashboard() {
             })
             
           ) : (
-            <div>Tem nada aqui não</div>
+              <div className="nullAlert">Ainda não há subtemas cadastrados</div>
           )}
         </div>
         <div className="teamInfoControlContainer">
@@ -211,7 +211,7 @@ function Dashboard() {
                 </div>
               )
             })
-          ) : (<div>Ola</div>)}
+          ) : (<div className="nullAlert">Ainda não há times inscritos</div>)}
         </div>
       </div>
     </main>
