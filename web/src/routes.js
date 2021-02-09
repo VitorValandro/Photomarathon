@@ -4,6 +4,7 @@ import Landing from './pages/Landing/Landing';
 import AuthScreen from './pages/AuthScreen/AuthScreen';
 import Team from './pages/Team/Team';
 import Dashboard from './pages/Dashboard/Dashboard';
+import NotFound from './pages/NotFound/NotFound';
 
 function Routes(){
   return(
@@ -13,6 +14,7 @@ function Routes(){
         <Route path="/auth" component={AuthScreen} />
         <Route path="/team/:teamId" component={Team} />
         <Route path="/admin" component={Dashboard} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>
   )

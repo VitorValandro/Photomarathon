@@ -13,7 +13,7 @@ import './Team.css';
 
 import api from '../../services/api';
 import { getTeamThatIsAuthenticated, isAuthenticated } from "../../services/auth";
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 function Team() {
   const [showAddMember, setShowAddMember] = useState(false);
@@ -25,6 +25,7 @@ function Team() {
   const [teamInfo, setTeamInfo] = useState({});
   const [memberListIsLoading, setMemberListIsLoading] = useState(true);
 
+  const history = useHistory();
   const { teamId } = useParams();
 
   useEffect(() => {
@@ -43,7 +44,10 @@ function Team() {
         setMembersArray(response.data);
         setMemberListIsLoading(false);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        history.push('/*');
+      });
   }
 
   async function getTeamInfo(){
