@@ -40,17 +40,9 @@ describe("Testando a rota de Times", () => {
     console.log(loginToken);  
   });
 
-  test("GET Teams (auth route without JWT) - Deve responder com permissão negada", async () => {
+  test("GET Teams - Deve responder com um array de times", async () => {
     const response = await request(app)
       .get("/teams")
-    expect(response.statusCode).toBe(401);
-    expect(response.body).toHaveProperty('error');
-  });
-
-  test("GET Teams (auth route with JWT) - Deve responder com um array de times", async() => {
-    const response = await request(app)
-      .get("/teams")
-      .set({ "Authorization": `Bearer ${loginToken}` })
     expect(response.statusCode).toBe(200);
     expect(response.body[0]).toHaveProperty('id');
   });
@@ -79,17 +71,9 @@ describe("Testando a rota de Times", () => {
     memberId = response.body.id;
   });
 
-  test("GET Member (auth route without JWT) - Deve responder com permissão negada", async () => {
+  test("GET Member - Deve responder com um array de membros", async () => {
     const response = await request(app)
       .get(`/teams/${teamId}/members`)
-    expect(response.statusCode).toBe(401);
-    expect(response.body).toHaveProperty('error');
-  });
-
-  test("GET Member (auth route with JWT) - Deve responder com um array de membros", async () => {
-    const response = await request(app)
-      .get(`/teams/${teamId}/members`)
-      .set({ "Authorization": `Bearer ${loginToken}` })
     expect(response.statusCode).toBe(200);
     expect(response.body[0]).toHaveProperty('id');
   });

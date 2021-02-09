@@ -61,7 +61,7 @@ describe("Testando a rota de Temas", () => {
 
   test("DELETE Subtheme - Deve responder com uma mensagem de sucesso", async () => {
     const response = await request(app)
-      .delete(`/themes/${themeId}/subthemes/${subthemeId}`);
+      .delete(`/themes/subthemes/${subthemeId}`);
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('message');
   });
