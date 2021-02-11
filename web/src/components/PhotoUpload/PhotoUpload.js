@@ -26,7 +26,7 @@ function PhotoUpload() {
   }, []);
 
   async function loadSubthemes(themeId){
-    let data;
+    let data = [];
     let options = [];
     await api.get(`/themes/${themeId}/subthemes`)
       .then((response) => {
