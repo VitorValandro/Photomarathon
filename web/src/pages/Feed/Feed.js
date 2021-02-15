@@ -5,7 +5,7 @@ import Photo from '../../components/Photo/Photo';
 import PhotoUpload from '../../components/PhotoUpload/PhotoUpload';
 
 import '../../global/global.css';
-import './Landing.css';
+import './Feed.css';
 import api from '../../services/api';
 import { isAuthenticated } from "../../services/auth";
 
