@@ -8,7 +8,8 @@
     <img width="400" src="https://user-images.githubusercontent.com/50156875/148426058-44af87fb-f48e-4f2d-a158-7250b1e5375c.png">
   </div>
 </div>
-
+<hr />
+<br />
 This is a beta version of a web platform for the event "Maratona Fotográfica" organized by Instituto Federal Catarinense, where I studied during high school. It is a photography
 competition for the 1st year students, one main theme is chosen and then four subthemes related to it are picked. After that, the students have 1 hour to take a good photo until
 another subtheme is chosen. In 2019 I participated of this competition and suffered with many problems in the organization of the event and its processes, so I've decided to solve
