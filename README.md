@@ -102,3 +102,5 @@ Run the client side:
 ```bash
 yarn start
 ```
+
+###### Vitor Valandro da Rosa. February 2021.
